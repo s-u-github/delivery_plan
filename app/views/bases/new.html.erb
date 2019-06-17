@@ -1,0 +1,63 @@
+<% provide(:title, "会社情報登録") %>
+
+<%= stylesheet_link_tag 'validationEngine.jquery' %> <!-- validationEngine.jquery.css　読み込み -->
+<%= javascript_include_tag 'jquery-3.4.1.min.js' %> <!-- jquery本体 読み込み -->
+<%= javascript_include_tag 'jquery.jpostal.js' %> <!-- jquery.jpostal.js 読み込み -->
+<!--<%= javascript_include_tag 'jquery.validationEngine.js' %> <!-- validationEngine本体 読み込み ---->
+<!--<%= javascript_include_tag 'jquery.validationEngine-ja.js' %> <!-- 日本語ファイル 読み込み ---->
+
+<h3>このアプリは配送効率をよくするために配送ルートを作成するシステムです。</h3>
+<div class="main-contents">
+  <h3>はじめに、拠点として登録するため会社情報を登録してください。</h3>
+  <div>
+     <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseExample"
+                                                  　aria-expanded="false" aria-controls="collapseExample">
+      会社登録
+      </button>
+  </div>
+  <div class="collapse" id="collapseExample">
+    <div class="card card-body">
+      <div class="row">
+        <div class="col-md-6 col-md-offset-3">
+          
+          <%= form_for @base, id: "form_id" do |f| %>
+            
+            <%= f.label :base_name %>
+            <%= f.text_field :base_name, class: "form-control" %>
+            
+            <%= f.label :postcode %>
+            <%= f.text_field :postcode, class: "form-control", id: "postcode" %>
+            
+            <%= f.label :address %>
+            <%= f.text_field :address, class: "form-control", id: "address" %>
+            
+            <%= f.label :base_phone_num %>
+            <%= f.text_field :base_phone_num, class: "form-control" %>
+            
+            <%= f.submit "登録", class: "btn btn-success" %>
+            
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 「起動スクリプト」 -->
+<script>
+$(function () {
+	$('#postcode').jpostal({
+		postcode : [
+			'#postcode'
+		],
+		address : {
+			'#address' : '%3%4%5'
+		}
+	});
+});
+
+// $(function(){
+//     $("#form_id").validationEngine();
+// });
+
+</script>

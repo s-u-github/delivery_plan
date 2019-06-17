@@ -1,8 +1,9 @@
-<% provide:title, "配送員登録" %>
-<h1>配送員登録</h1>
+<% provide:title, "社員登録" %>
+<h1>社員登録</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
+    
     <%= form_for @user do |f| %>
       <%= render 'shared/error_messages', object: @user %>   <!-- 登録失敗時のエラーメッセージ -->
 
