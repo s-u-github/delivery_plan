@@ -1,35 +1,40 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-light bg-light rounded">
     <%= link_to "配送計画システム", "#", class: "navbar-brand" %>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample09"
+            aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     
-    <% if logged_in? && current_user.admin? %>
       <div class="collapse navbar-collapse" id="navbarsExample09">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <%= link_to "トップ", "#", class: "nav-link" %>
-            <span class="sr-only">(current)</span>
-            <!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
-          </li>
-          <li class="nav-item">
-            <%= link_to "会社情報", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "配送計画リスト", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "顧客登録", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "社員リスト", "#", class: "nav-link" %>
-          </li>
-          <li class="nav-item">
-            <%= link_to "ログアウト", logout_path, method: :delete, class: "nav-link" %>
-          </li>
+          <% if logged_in? && current_user.admin? %>
+            <li class="nav-item active">
+              <%= link_to "トップ", user_path(id: current_user.id), class: "nav-link" %>
+              <span class="sr-only">(current)</span>
+              <!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
+            </li>
+            <li class="nav-item">
+              <%= link_to "拠点登録", bases_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "配送計画リスト", "#", class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "顧客登録", "#", class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "社員リスト", "#", class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "ログアウト", logout_path, method: :delete, class: "nav-link" %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to "ログイン", login_path, class: "nav-link" %>
+            </li>
+          <% end %>
         <ul>
       </div>
-    <% end %>
   </nav>
 </header>

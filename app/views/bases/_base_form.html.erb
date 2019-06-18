@@ -1,0 +1,17 @@
+<%= form_for @base, id: "form_id" do |f| %>
+  
+  <%= f.label :base_name %>
+  <%= f.text_field :base_name, class: "form-control" %>
+  
+  <%= f.label :postcode %>
+  <%= f.text_field :postcode, class: "form-control", id: "postcode" %>
+  
+  <%= f.label :address %>
+  <%= f.text_field :address, class: "form-control", id: "address" %>
+  
+  <%= f.label :base_phone_num %>
+  <%= f.text_field :base_phone_num, class: "form-control" %>
+  
+  <%= f.submit "登録", class: "btn btn-success" %>
+  
+<% end %>
