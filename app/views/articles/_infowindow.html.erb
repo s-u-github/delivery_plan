@@ -1,0 +1,12 @@
+<%= javascript_include_tag 'article.js' %> <!-- article.js 読み込み -->
+
+
+<div id="info-window-name">
+  <%= @article.title %><br>
+  <%= link_to "Googleマップ", "https://www.google.com/maps/dir/?api=1&destination=#{@article.latitude}, #{@article.longitude}" %>
+</div>
+<div id="info-wondow-btn">
+  <%= button_tag "経路に追加", id: "btn-add", class: "btn btn-primary btn-sm", 
+    onclick: "addArticle('#{article.title}',#{article.latitude}, #{article.longitude})" %>
+</div>
+

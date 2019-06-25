@@ -12,6 +12,9 @@ gem 'turbolinks',        '5.0.1'
 gem 'jbuilder',          '2.7.0'
 gem 'jp_prefecture',     '0.9.0' # 都道府県名変換
 gem 'jQuery-Validation-Engine-rails' # jQueryでバリデーション
+gem "gmaps4rails"
+gem "geocoder"
+
 
 
 group :development, :test do

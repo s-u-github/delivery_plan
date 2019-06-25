@@ -10,7 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190614093956) do
+ActiveRecord::Schema.define(version: 20190625063006) do
+
+  create_table "articles", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "address"
+    t.float "latitude"
+    t.float "longitude"
+    t.string "title"
+    t.string "postcode"
+    t.string "phone_num"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_articles_on_user_id"
+  end
 
   create_table "bases", force: :cascade do |t|
     t.string "base_name"
@@ -19,6 +32,14 @@ ActiveRecord::Schema.define(version: 20190614093956) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "base_phone_num"
+  end
+
+  create_table "day_plans", force: :cascade do |t|
+    t.date "date"
+    t.integer "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_day_plans_on_user_id"
   end
 
   create_table "deliveryinfos", force: :cascade do |t|

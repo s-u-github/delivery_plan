@@ -6,15 +6,16 @@ Rails.application.routes.draw do
   post '/login',    to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   
+  # 顧客情報更新
+  patch 'users/:user_id/articles/:id/update', to: 'articles#update', as: :update_articles
+  # 顧客情報削除 
+  delete 'users/:user_id/articles/:id/destroy', to: 'articles#destroy', as: :delete_articles
+
+  
+  
   resources :users do
-    member do
-      get 'delivery_plan', to: 'users#delivery_plan'
-    end
+    # 顧客情報登録
+    resources :articles, only: [:create, :index] #リソースをネストしていることで/users/:user_id/articlesというURLになる。
   end
-  
-  resources :bases do
-    resources :deliveryinfos
-  end
-  
 
 end

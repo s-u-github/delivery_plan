@@ -8,23 +8,23 @@
     
       <div class="collapse navbar-collapse" id="navbarsExample09">
         <ul class="navbar-nav mr-auto">
-          <% if logged_in? && current_user.admin? %>
+          <% if logged_in? %>
             <li class="nav-item active">
               <%= link_to "トップ", user_path(id: current_user.id), class: "nav-link" %>
               <span class="sr-only">(current)</span>
               <!--<a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>-->
             </li>
             <li class="nav-item">
-              <%= link_to "拠点登録", bases_path, class: "nav-link" %>
+              <%= link_to "顧客リスト", user_articles_path(current_user.id), class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "配送計画作成", "#", class: "nav-link" %>
             </li>
             <li class="nav-item">
               <%= link_to "配送計画リスト", "#", class: "nav-link" %>
             </li>
             <li class="nav-item">
-              <%= link_to "顧客登録", "#", class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "社員リスト", "#", class: "nav-link" %>
+              <%= link_to "登録者リスト", "#", class: "nav-link" %>
             </li>
             <li class="nav-item">
               <%= link_to "ログアウト", logout_path, method: :delete, class: "nav-link" %>

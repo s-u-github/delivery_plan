@@ -17,3 +17,5 @@
 //= require bootstrap-sprockets
 //= require jquery.validationEngine-en
 //= require jquery.validationEngine
+//= require underscore
+//= require gmaps/google

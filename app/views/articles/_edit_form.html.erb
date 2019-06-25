@@ -1,0 +1,17 @@
+<%= form_for article, url: update_articles_path(id: article.id), id: "form_id", class: "edit-form" do |f| %>
+
+  <%= f.label :title %>
+  <%= f.text_field :title, class: "form-control edit-form" %>
+  
+  <%= f.label :postcode %>
+  <%= f.text_field :postcode, class: "form-control edit-form", id: "postcode" %>
+  
+  <%= f.label :address %>
+  <%= f.text_field :address, class: "form-control edit-form", id: "address" %>
+  
+  <%= f.label :phone_num %>
+  <%= f.text_field :phone_num, class: "form-control edit-form" %>
+  
+  <%= f.submit "編集", class: "btn btn-success" %>
+  
+<% end %>
