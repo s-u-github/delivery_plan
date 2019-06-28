@@ -10,7 +10,10 @@ Rails.application.routes.draw do
   patch 'users/:user_id/articles/:id/update', to: 'articles#update', as: :update_articles
   # 顧客情報削除 
   delete 'users/:user_id/articles/:id/destroy', to: 'articles#destroy', as: :delete_articles
-
+  # 配送計画作成ページ
+  get 'users/:user_id/articles/delivery_plan', to: 'articles#delivery_plan', as: :delivery_plan
+  # 配送計画保存
+  patch 'users/:user_id/articles/plan_create', to: 'articles#plan_create', as: :plan_patch
   
   
   resources :users do

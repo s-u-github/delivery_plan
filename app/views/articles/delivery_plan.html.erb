@@ -1,0 +1,33 @@
+<div>
+  <h1>配送計画作成</h1>
+  
+    <table class="table table-hover table-bordered">
+      <thead class="thead-dark">
+        <tr>
+          <th>追加</th>
+          <th>名称</th>
+          <th>郵便番号</th>
+          <th>所在地</th>
+          <th>電話番号</th>
+        </tr>
+      </thead>
+      
+      <%= form_tag plan_patch_path, method: :patch do %>
+
+        <% @articles.each do |article| %>
+          <%= fields_for "articles[]", article do |fi| %>
+            <tbody>
+              <tr>
+                <td><%= fi.check_box :plan_check, {}, "true", "false" %></td>
+                <td><%= article.title %></td>
+                <td><%= article.postcode %></td>
+                <td><%= article.address %></td>
+                <td><%= article.phone_num %></td>
+              </tr>
+            </tbody>
+          <% end %>
+        <% end %>
+        <%= submit_tag "作成", class: "btn btn-primary" %>
+      <% end %>
+    </table>
+</div>

@@ -50,11 +50,36 @@ class ArticlesController < ApplicationController
     end
   end
   
+  def delivery_plan
+    @user = User.find(params[:user_id])
+    @articles = @user.articles.all
+  end
+  
+  def plan_create
+    @user = User.find(params[:user_id])
+    if article_invalid?
+      # plan_create_params.each do |key, value|
+      @items = plan_create_params.keys.each do |id|
+        article = Article.find(id)
+        article.update_attributes(plan_create_params[id])
+      end
+      flash[:success] = "配送計画作成完了"
+      redirect_to delivery_plan_url(current_user.id)
+    else
+      flash[:danger] = "経由地点が規約より多いです。"
+      render 'delivery_plan'
+    end
+  end
+  
   
   private
   
     def article_params
       params.require(:article).permit(:title, :postcode, :latitude, :longitude, :address, :phone_num)
+    end
+    
+    def plan_create_params
+      params.permit(articles: [:plan_check])[:articles]
     end
 
 end
