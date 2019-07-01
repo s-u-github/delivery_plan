@@ -24,6 +24,49 @@
   </div>
 </div>
 
+
+
+<table class="table table-hover table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th>名称</th>
+      <th>郵便番号</th>
+      <th>所在地</th>
+      <th>電話番号</th>
+      <th>編集/削除</th>
+    </tr>
+  </thead>
+  
+  <tbody>
+    <% Article.all.each do |article| %>
+      <tr>
+        <td><%= article.title %></td>
+        <td><%= article.postcode %></td>
+        <td><%= article.address %></td>
+        <td><%= article.phone_num %></td>
+        <td>
+          <div class="article-edit">
+            <a data-toggle="collapse" data-target="#edit-<%= article.id %>" aria-expanded="false"
+               aria-controls="collapseExample" role="button" data-base="<%= article.id %>" >
+            編集
+            </a>
+            <div class="collapse" id="edit-<%= article.id %>">
+              <div class="card card-body">
+                <div class="row">
+                  <div class="col-md-6 col-md-offset-3">
+                    <%= render 'edit_form', { article: article } %>
+                  </div>
+                </div>
+              </div>
+            </div>
+             / <%= link_to "削除", user_article_path(id: article, user_id: @user.id), method: :delete, data: {confirm: "削除してよろしいですか？"} %>
+          </div>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 <!-- 「起動スクリプト」 -->
 <script>
 $(function () {
@@ -42,46 +85,3 @@ $(function () {
 // });
 
 </script>
-
-<table class="table table-hover table-bordered">
-  <thead class="thead-dark">
-    <tr>
-      <th>名称</th>
-      <th>郵便番号</th>
-      <th>所在地</th>
-      <th>電話番号</th>
-      <th>編集/削除</th>
-    </tr>
-  </thead>
-  
-  <tbody>
-    <% @articles.each do |article| %>
-    <tr>
-      <td><%= article.title %></td>
-      <td><%= article.postcode %></td>
-      <td><%= article.address %></td>
-      <td><%= article.phone_num %></td>
-      <td>
-        <div class="article-edit">
-          <a data-toggle="collapse" data-target="#edit-<%= article.id %>" aria-expanded="false"
-             aria-controls="collapseExample" role="button" data-base="<%= article.id %>" >
-          編集
-          </a>
-          <div class="collapse" id="edit-<%= article.id %>">
-            <div class="card card-body">
-              <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                  <%= render 'edit_form', { article: article } %>
-                </div>
-              </div>
-            </div>
-          </div>
-           / <%= link_to "削除", delete_articles_path(id: article, user_id: @user.id), method: :delete, data: {confirm: "削除してよろしいですか？"} %>
-        </div>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-
-</table>
-

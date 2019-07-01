@@ -1,7 +1,6 @@
 class User < ApplicationRecord
   
   has_many :articles
-  has_many :day_plan
   before_save { self.email = email.downcase } # データベース保存時、小文字で保存
   validates :name, presence: true
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i  # 正規表現

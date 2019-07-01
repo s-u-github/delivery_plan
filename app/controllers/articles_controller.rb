@@ -2,13 +2,13 @@ class ArticlesController < ApplicationController
   
   def index
     @user = User.find(params[:user_id])
-    @articles = @user.articles.all
-    @article = @user.articles.new
+    @articles = Article.all
+    @article = Article.new
   end
   
   def create
     @user = User.find(params[:user_id])
-    @article = @user.articles.new(article_params)
+    @article = @user.articles.build(article_params)
     if @article.save
       flash[:success] = "登録完了"
       redirect_to user_articles_url
@@ -58,10 +58,10 @@ class ArticlesController < ApplicationController
   def plan_create
     @user = User.find(params[:user_id])
     if article_invalid?
-      # plan_create_params.each do |key, value|
-      @items = plan_create_params.keys.each do |id|
-        article = Article.find(id)
-        article.update_attributes(plan_create_params[id])
+      plan_create_params.each do |key, value|
+      # @items = plan_create_params.keys.each do |id|
+        article = Article.find(key)
+        article.update_attributes(plan_check: value[:plan_check])
       end
       flash[:success] = "配送計画作成完了"
       redirect_to delivery_plan_url(current_user.id)
