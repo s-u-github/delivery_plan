@@ -2,8 +2,8 @@ class ArticlesController < ApplicationController
   
   def index
     @user = User.find(params[:user_id])
-    @articles = Article.all
-    @article = Article.new
+    @articles = @user.articles.all
+    @article = @user.articles.new
   end
   
   def create
@@ -71,6 +71,10 @@ class ArticlesController < ApplicationController
     end
   end
   
+  def plan_list
+    @article = Article.first
+    
+  end
   
   private
   

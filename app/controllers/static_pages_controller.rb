@@ -1,6 +1,5 @@
 class StaticPagesController < ApplicationController
   def home
-    @base = Base.new
   end
   
   def create

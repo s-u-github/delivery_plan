@@ -1,16 +1,16 @@
-<%= form_for @article, url: user_articles_path, id: "form_id" do |f| %>
+<%= form_for @article, url: user_articles_path, id: "form_id", class: "new-form" do |f| %>
   
   <%= f.label :title %>
-  <%= f.text_field :title, class: "form-control" %>
+  <%= f.text_field :title, class: "form-control new-form" %>
   
   <%= f.label :postcode %>
-  <%= f.text_field :postcode, class: "form-control", id: "postcode" %>
+  <%= f.text_field :postcode, class: "form-control new-form", id: "postcode" %>
   
   <%= f.label :address %>
-  <%= f.text_field :address, class: "form-control", id: "address" %>
+  <%= f.text_field :address, class: "form-control new-form", id: "address" %>
   
   <%= f.label :phone_num %>
-  <%= f.text_field :phone_num, class: "form-control" %>
+  <%= f.text_field :phone_num, class: "form-control new-form" %>
   
   <%= f.submit "登録", class: "btn btn-success" %>
   
