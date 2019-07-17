@@ -72,8 +72,19 @@ class ArticlesController < ApplicationController
   end
   
   def plan_list
-    @article = Article.first
-    
+    @user = User.find(params[:user_id])
+    @articles = @user.articles.where(plan_check: true)
+    @articles_count = @user.articles.where(plan_check: true).count
+    gon.count = @articles_count
+    gon.articles = @articles
+    latitude = []
+    longitude = []
+    @articles.each do |article|
+      latitude.push(article.latitude)
+      longitude.push(article.longitude)
+    end
+    gon.latitude = latitude
+    gon.longitude = longitude
   end
   
   private

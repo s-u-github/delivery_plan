@@ -3,8 +3,6 @@
   <script src="https://maps.google.com/maps?file=api&v=2&key=AIzaSyCVdA8BviehlgO1NcLlkMxtY4LOhRDC3pE&sensor=false"
         type="text/javascript" charset="utf-8"></script>
   
-  <div id="latitude" data-latitude="<%= @article.latitude.to_json %>"></div>
-  <div id="longitude" data-longitude="<%= @article.longitude.to_json %>"></div>
   
   <body onload="initialize()" onunload="GUnload()">
     <div id="map_canvas" style="width: 700px; height: 500px"></div>
