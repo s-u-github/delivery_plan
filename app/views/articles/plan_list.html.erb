@@ -1,12 +1,126 @@
-  <%= javascript_include_tag 'code2_1' %>
+  <!--<%= javascript_include_tag 'code2_1' %>-->
+  <%= javascript_include_tag 'jquery-3.4.1.min.js' %> <!-- jquery本体 読み込み -->
+
   
-  <script src="https://maps.google.com/maps?file=api&v=2&key=AIzaSyCVdA8BviehlgO1NcLlkMxtY4LOhRDC3pE&sensor=false"
-        type="text/javascript" charset="utf-8"></script>
+  <!-- スマートフォン向けviewportの指定 -->
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+  <!-- Google Maps APIの読み込み -->
+  <script type="text/javascript" src="//maps.google.com/maps/api/js?key=AIzaSyCVdA8BviehlgO1NcLlkMxtY4LOhRDC3pE"></script> 
+  <!--<script async defer-->
+  <!-- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVdA8BviehlgO1NcLlkMxtY4LOhRDC3pE&callback=initMap">-->
+  <!--</script>-->
   
   
-  <body onload="initialize()" onunload="GUnload()">
+  
+<script type="text/javascript">
+  
+  var latitude = gon.latitude;
+  var longitude = gon.longitude;
+  var articles = gon.articles
+  var address = gon.address
+  var title = gon.title
+  var count = gon.count;
+  var pointArray = [];
+  var base = gon.base;
+  var marker = [];
+  var infoWindow = [];
+  var markerData = [];
+  
+  for (var i = 0; i < count; i++) {
+    markerData.push({
+      title: title[i],
+      lat: latitude[i],
+      lng: longitude[i],
+      address: address[i]
+    });
+  }
+  
+  function attachMessage(marker, msg) {
+  google.maps.event.addListener(marker, 'Click', function(event) {
+  new google.maps.InfoWindow({
+    title: msg
+    }).open(marker.getMap(), marker);
+    });
+  }
+  
+  function initialize() {
+    /* 緯度・経度 */
+    // var latlng = new google.maps.LatLng(base.latitude, base.longitude);
+    /* 地図のオプション設定 */
+    // 地図の作成
+    var mapLatLng = new google.maps.LatLng({lat: base.latitude, lng: base.longitude}); // 緯度経度のデータ作成
+    var map = new google.maps.Map(document.getElementById('map_canvas'), { // #sampleに地図を埋め込む
+        center: mapLatLng, // 地図の中心を指定
+        zoom: 10 // 地図のズームを指定
+        });
+    // var myOptions = {
+    //     /*初期のズーム レベル */
+    //     zoom: 10,
+    //     /* 地図の中心点 */
+    //     center: latlng,
+    //     /* 地図タイプ */
+    //     mapTypeId: google.maps.MapTypeId.ROADMAP
+    // };
+    // var map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    
+    // マーカー毎の処理
+    for (var i = 0; i < count; i++) {
+      markerLatLng = new google.maps.LatLng({lat: markerData[i]['lat'], lng: markerData[i]['lng']}); // 緯度経度のデータ作成
+      marker[i] = new google.maps.Marker({ // マーカーの追加
+        position: markerLatLng, // マーカーを立てる位置を指定
+            map: map // マーカーを立てる地図を指定
+      });
+      
+      google.maps.event.addListener(marker[i], 'click', function() {
+                showInfoWindow(this);
+      });
+      /* 情報ウィンドウ表示 */
+      function showInfoWindow(obj){
+          /* 既に開かれていたら閉じる */
+          if(infowindow) infowindow.close();
+          infowindow=new google.maps.InfoWindow({
+              /* クリックしたマーカーのタイトルと緯度・経度を情報ウィンドウに表示 */
+              content: obj.getPosition().lat()+", "+obj.getPosition().lng(),
+          });
+          infowindow.open(map,obj);
+      }
+      
+      // infoWindow[i] = new google.maps.InfoWindow({ // 吹き出しの追加
+      //   content: '<div class="sample">' + markerData[i]['title'] + '</div>' // 吹き出しに表示する内容
+      // });
+      
+      // markerEvent(i); // マーカーにクリックイベントを追加
+    }
+  }
+  
+  // マーカーにクリックイベントを追加
+  // function markerEvent(i) {
+  //   marker[i].addListener('click', function() { // マーカーをクリックしたとき
+  //     infoWindow[i].open(map, marker[i]); // 吹き出しの表示
+  //   });
+  // }
+    
+     /* ★マーカーオブジェクト */
+    // var marker = new google.maps.Marker({
+    //     position: latlng, /* マーカーを立てる場所の緯度・経度 */
+    //     map: map, /*マーカーを配置する地図オブジェクト */
+    //     title: base.address
+    // });
+    // for(var i = 0; i < count; i++){
+    //   var mylatlng = new google.maps.LatLng(latitude[i], longitude[i]);
+    //   this["marker" + i] = new google.maps.Marker({
+    //     position: mylatlng,
+    //     map: map,
+    //     title: address[i]
+    //   });
+    // }
+</script>
+  
+  
+  <body onload="initialize()">
+    <!-- 地図の埋め込み表示 -->
     <div id="map_canvas" style="width: 700px; height: 500px"></div>
-    <div id="route" style="width: 700px; height: 400px;overflow: scroll"></div>
+    <!--<div id="route" style="width: 700px; height: 400px;overflow: scroll"></div>-->
   </body>
 
 

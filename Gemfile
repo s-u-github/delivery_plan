@@ -15,6 +15,8 @@ gem 'jQuery-Validation-Engine-rails' # jQueryでバリデーション
 gem "gmaps4rails"
 gem "geocoder"
 gem 'gon'
+# bulk insert
+gem 'activerecord-import'
 
 
 

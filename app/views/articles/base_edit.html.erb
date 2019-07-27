@@ -1,0 +1,38 @@
+<h1>拠点情報編集</h1>
+
+<%= form_for @article, url: base_update_path, id: "form_id", class: "update-form" do |f| %>
+  
+  <%= f.label :title %>
+  <%= f.text_field :title, class: "form-control new-form" %>
+  
+  <%= f.label :postcode %>
+  <%= f.text_field :postcode, class: "form-control new-form", id: "postcode" %>
+  
+  <%= f.label :address %>
+  <%= f.text_field :address, class: "form-control new-form", id: "address" %>
+  
+  <%= f.label :phone_num %>
+  <%= f.text_field :phone_num, class: "form-control new-form" %>
+  
+  <%= f.submit "編集", class: "btn btn-success" %>
+  
+<% end %>
+
+<!-- 「起動スクリプト」 -->
+<script>
+$(function () {
+	$('#postcode').jpostal({
+		postcode : [
+			'#postcode'
+		],
+		address : {
+			'#address' : '%3%4%5'
+		}
+	});
+});
+
+// $(function(){
+//     $("#form_id").validationEngine();
+// });
+
+</script>

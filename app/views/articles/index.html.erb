@@ -39,7 +39,7 @@
   </thead>
   
   <tbody>
-    <% Article.all.each do |article| %>
+    <% @articles.all.each do |article| %>
       <tr>
         <td><%= article.title %></td>
         <td><%= article.postcode %></td>

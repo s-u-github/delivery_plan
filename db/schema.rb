@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190701081158) do
+ActiveRecord::Schema.define(version: 20190718090231) do
 
   create_table "articles", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 20190701081158) do
     t.string "phone_num"
     t.integer "user_id"
     t.boolean "plan_check", default: false
+    t.boolean "base_point", default: false
     t.index ["user_id"], name: "index_articles_on_user_id"
   end
 

@@ -1,0 +1,10 @@
+<% provide(:title, "拠点情報") %>
+
+<h1>拠点情報</h1>
+
+<h3>名称      : <%= @article.title %></h3>
+<h3>郵便番号  : <%= @article.postcode %></h3>
+<h3>所在地    : <%= @article.address %></h3>
+<h3>電話番号  : <%= @article.phone_num %></h3>
+
+<%= link_to "編集", base_edit_path(current_user.id), class: "btn btn-success" %> 
