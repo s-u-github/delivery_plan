@@ -119,8 +119,41 @@
   
   <body onload="initialize()">
     <!-- 地図の埋め込み表示 -->
-    <div id="map_canvas" style="width: 700px; height: 500px"></div>
+    <div id="map_canvas" style="width: 100%; height: 700px"></div>
     <!--<div id="route" style="width: 700px; height: 400px;overflow: scroll"></div>-->
+    
+    <table class="table table-striped">
+      <tr>
+        <th>番号</th>
+        <th>行き先</th>
+        <th>納品開始</th>
+        <th>納品終了</th>
+      </tr>
+      
+      <% @articles_delivery.each do |article| %>
+
+        <tr>
+          <td></td>
+          <td><%= article.title %></td>
+          <td>
+            <% if article.DailyReports.find_by(day: Date.today).delivery_start.nil? %>
+              <%= button_to "開始", delivery_time_path(article_id: article.id), class: "btn btn-success" %>
+            <% else %>
+              <%= article.DailyReports.find_by(day: Date.today).delivery_start.strftime("%H時%M分") %>
+            <% end %>
+          </td>
+          <td>
+            <% if article.DailyReports.find_by(day: Date.today).delivery_finish.nil? %>
+              <%= button_to "終了", delivery_time_path(article_id: article.id), class: "btn btn-primary" %>
+            <% else %>
+              <%= article.DailyReports.find_by(day: Date.today).delivery_finish.strftime("%H時%M分") %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+    
+    
   </body>
 
 

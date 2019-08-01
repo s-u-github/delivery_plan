@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   get 'users/:user_id/articles/base_edit', to: 'articles#base_edit', as: :base_edit
   # 拠点情報更新
   patch  'users/:user_id/articles/base_update', to: 'articles#base_update', as: :base_update
+  # 納品開始・終了時間新規保存
+  post 'users/:user_id/articles/plan_list', to: 'daily_reports#delivery_time', as: :delivery_time
   
   resources :users do
     # 顧客情報登録

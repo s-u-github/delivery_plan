@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190718090231) do
+ActiveRecord::Schema.define(version: 20190727081147) do
 
   create_table "articles", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -25,6 +25,17 @@ ActiveRecord::Schema.define(version: 20190718090231) do
     t.boolean "plan_check", default: false
     t.boolean "base_point", default: false
     t.index ["user_id"], name: "index_articles_on_user_id"
+  end
+
+  create_table "daily_reports", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.date "day"
+    t.datetime "delivery_start"
+    t.datetime "delivery_finish"
+    t.string "note"
+    t.integer "article_id"
+    t.index ["article_id"], name: "index_daily_reports_on_article_id"
   end
 
   create_table "users", force: :cascade do |t|

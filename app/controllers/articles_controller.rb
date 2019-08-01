@@ -8,7 +8,7 @@ class ArticlesController < ApplicationController
   
   def create
     @user = User.find(params[:user_id])
-    if params[:commit] = "CSVをインポート"
+    if params[:commit] == "CSVをインポート"
       if params[:users_file].content_type == "text/csv" # file_field_tagで選択したファイルがCSVファイルかどうか
         registered_count = import_articles # import_usersは下の方にメソッドあり CSVのインポート処理関連
         unless @errors.count == 0
@@ -120,6 +120,14 @@ class ArticlesController < ApplicationController
     @articles = @user.articles.where(plan_check: true)
     @articles_count = @user.articles.where(plan_check: true).count
     @article_base = @user.articles.find_by(base_point: true)
+    @articles_delivery = @user.articles.where(plan_check: true).where.not(base_point: true)
+    
+    # @article_id = []
+    # @articles_delivery.each do |article|
+    #   @article_id.push(article.id)
+    # end
+      
+    
     gon.base = @article_base
     gon.count = @articles_count
     gon.articles = @articles
@@ -137,6 +145,17 @@ class ArticlesController < ApplicationController
     gon.longitude = longitude
     gon.address = address
     gon.title = title
+    
+    @articles.each do |article|
+      @first_day = first_day(params[:first_day])
+      @last_day = @first_day.end_of_month # 初月の日付を使って月末をインスタンス変数に代
+      (@first_day..@last_day).each do |day|
+        unless article.DailyReports.any? {|daily| daily.day == day} # unless文なのでfalseの場合、下の処理をする。
+          record = article.DailyReports.build(day: day) # Railsの慣習に倣い、あるモデルに関連づいたモデルのデータを生成するのにbuildメソッドを使っている
+          record.save
+        end
+      end
+    end
   end
   
   private
