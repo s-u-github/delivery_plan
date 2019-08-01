@@ -4,7 +4,7 @@
 <%= javascript_include_tag 'jquery.jpostal.js' %> <!-- jquery.jpostal.js 読み込み -->
 
 <h1>拠点情報登録</h1>
-<%= form_for @article, url: base_create_path, id: "form_id", class: "new-form" do |f| %>
+<%= form_for @article, url: base_create_user_articles_path, id: "form_id", class: "new-form" do |f| %>
   
   <%= f.label :title %>
   <%= f.text_field :title, class: "form-control new-form" %>

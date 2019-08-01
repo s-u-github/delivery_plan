@@ -64,7 +64,7 @@ class ArticlesController < ApplicationController
     @article = @user.articles.build(article_params)
     if @article.update_attributes(base_point: true, plan_check: true)
       flash[:success] = "登録完了"
-      redirect_to base_info_url
+      redirect_to base_info_user_articles_url
     else
       flash.now[:danger] = "入力が足りません。"
       render 'base_new'
@@ -81,7 +81,7 @@ class ArticlesController < ApplicationController
     @article = @user.articles.find_by(base_point: true, plan_check: true)
     if @article.update_attributes(article_params)
       flash[:success] = "編集完了"
-      redirect_to base_info_url
+      redirect_to base_info_user_articles_url
     else
       flash.now[:danger] = "入力が足りません。"
       render 'base_edit'
@@ -108,7 +108,7 @@ class ArticlesController < ApplicationController
         article.update_attributes(plan_check: value[:plan_check])
       end
       flash[:success] = "配送計画作成完了"
-      redirect_to delivery_plan_url(current_user.id)
+      redirect_to delivery_plan_user_articles_url(current_user.id)
     else
       flash[:danger] = "経由地点が規約より多いです。"
       render 'delivery_plan'

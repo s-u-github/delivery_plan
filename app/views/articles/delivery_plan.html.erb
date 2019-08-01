@@ -12,7 +12,7 @@
         </tr>
       </thead>
       
-      <%= form_tag plan_patch_path, method: :patch do %>
+      <%= form_tag plan_create_user_articles_path, method: :patch do %>
 
         <% @articles.each do |article| %>
           <%= fields_for "articles[]", article do |fi| %>

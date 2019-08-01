@@ -1,6 +1,6 @@
 <h1>拠点情報編集</h1>
 
-<%= form_for @article, url: base_update_path, id: "form_id", class: "update-form" do |f| %>
+<%= form_for @article, url: base_update_user_articles_path, id: "form_id", class: "update-form" do |f| %>
   
   <%= f.label :title %>
   <%= f.text_field :title, class: "form-control new-form" %>

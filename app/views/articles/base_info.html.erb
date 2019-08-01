@@ -7,4 +7,4 @@
 <h3>所在地    : <%= @article.address %></h3>
 <h3>電話番号  : <%= @article.phone_num %></h3>
 
-<%= link_to "編集", base_edit_path(current_user.id), class: "btn btn-success" %> 
+<%= link_to "編集", base_edit_user_articles_path(current_user.id), class: "btn btn-success" %> 

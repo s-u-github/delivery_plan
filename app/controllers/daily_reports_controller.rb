@@ -12,8 +12,11 @@ class DailyReportsController < ApplicationController
       @daily.update_attributes(delivery_finish: Time.current)
       flash[:info] = "納品終了"
     end
-    redirect_to plan_list_url(user_id: current_user.id)
-      
+    redirect_to plan_list_user_articles_url(user_id: current_user.id)
+  end
+  
+  def daily_index
+    @user = User.find(params[:user_id])
     
   end
 end
