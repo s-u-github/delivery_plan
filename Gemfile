@@ -17,6 +17,8 @@ gem "geocoder"
 gem 'gon'
 # bulk insert
 gem 'activerecord-import'
+# カレンダー作成
+gem "simple_calendar", "~> 2.0"
 
 
 

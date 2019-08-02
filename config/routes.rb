@@ -28,8 +28,15 @@ Rails.application.routes.draw do
   # patch  'users/:user_id/articles/base_update', to: 'articles#base_update', as: :base_update
   # 納品開始・終了時間新規保存
   # post 'users/:user_id/articles/plan_list', to: 'daily_reports#delivery_time', as: :delivery_time
+  # 日報作成
+  patch 'users/:user_id/articles/plan_list', to: 'daily_reports#report_create', as: :report_create
   # 日報一覧
   get 'users/:user_id/daily_reports', to: 'daily_reports#daily_index', as: :daily_index
+  # 日報詳細・編集
+  get 'users/:user_id/daily_reports/:date', to: 'daily_reports#daily_show', as: :daily_show
+  # 日報編集保存
+  patch 'users/:user_id/daily_reports/:date/update', to: 'daily_reports#daily_update', as: :daily_update
+  
   
   resources :users do
     # 顧客情報登録

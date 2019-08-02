@@ -117,6 +117,7 @@ class ArticlesController < ApplicationController
   
   def plan_list
     @user = User.find(params[:user_id])
+    @articles_all = @user.articles.all
     @articles = @user.articles.where(plan_check: true)
     @articles_count = @user.articles.where(plan_check: true).count
     @article_base = @user.articles.find_by(base_point: true)
@@ -146,7 +147,7 @@ class ArticlesController < ApplicationController
     gon.address = address
     gon.title = title
     
-    @articles.each do |article|
+    @articles_all.each do |article|
       @first_day = first_day(params[:first_day])
       @last_day = @first_day.end_of_month # 初月の日付を使って月末をインスタンス変数に代
       (@first_day..@last_day).each do |day|

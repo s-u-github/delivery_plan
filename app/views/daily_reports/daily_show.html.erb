@@ -1,0 +1,28 @@
+<h1><%= @daily_today %>&emsp;日報</h1>
+
+<%= form_tag daily_update_path, method: :patch do %>
+  <table class = "table-bordered table-striped table-condensed">
+      <thead>
+        <tr>
+          <th>行き先</th>
+          <th>納品開始時間</th>
+          <th>納品終了時間</th>
+          <th>備考</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <% @dailys.each do |daily| %>
+          <%= fields_for "daily_reports[]", daily do |af| %>
+            <tr>
+              <td><%= Article.find(daily.article_id).title  %></td>
+              <td><%= af.time_field :delivery_start, class: 'form-control' %></td>
+              <td><%= af.time_field :delivery_finish, class: 'form-control' %></td>
+              <td><%= af.text_field :note, class: 'form-control' %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+  </table>
+    <%= submit_tag "更新", class: 'btn btn-primary' %>
+<% end %>

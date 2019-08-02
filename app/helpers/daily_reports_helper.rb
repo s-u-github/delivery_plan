@@ -1,6 +1,6 @@
 module DailyReportsHelper
   
-  # 現在の時間を作成(started_atとfinished_atを作成するときに使用)
+  # 現在の時間を作成
   def current_time
     Time.new(
         Time.now.year,
@@ -11,6 +11,7 @@ module DailyReportsHelper
         )
   end
   
+  #　月初を抽出
   def first_day(date)
     !date.nil? ? Date.parse(date) : Date.current.beginning_of_month
   end
