@@ -36,7 +36,7 @@ Rails.application.routes.draw do
   get 'users/:user_id/daily_reports/:date', to: 'daily_reports#daily_show', as: :daily_show
   # 日報編集保存
   patch 'users/:user_id/daily_reports/:date/update', to: 'daily_reports#daily_update', as: :daily_update
-  
+
   
   resources :users do
     # 顧客情報登録

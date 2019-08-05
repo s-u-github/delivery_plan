@@ -19,6 +19,9 @@ gem 'gon'
 gem 'activerecord-import'
 # カレンダー作成
 gem "simple_calendar", "~> 2.0"
+# pdf関連
+gem 'wkhtmltopdf-binary'
+gem 'wicked_pdf'
 
 
 

@@ -39,8 +39,39 @@ class DailyReportsController < ApplicationController
   # 日報詳細・編集
   def daily_show
     @user = User.find(params[:user_id])
-    @daily_today = params[:date]
-    @dailys = DailyReport.where(day: @daily_today, report_name: @user.name)
+    @daily_current= params[:date]
+    @dailys = DailyReport.where(day: @daily_current, report_name: @user.name)
+    
+  #   respond_to do |format|
+  #   format.html
+  #   format.pdf do
+  #     render pdf: "sample",   # PDF名
+  #           template: "daily_reports/daily_show.html.erb", # viewを対象にする
+  #           encoding: "UTF-8" # 日本語に対応させる
+  #   end
+  # end
+    
+    # respond_to do |format|
+    #   format.html { redirect_to daily_show_path(date: params[:date], format: :pdf, debug: 1) }
+    #   format.pdf do
+    #       render     pdf: "1.pdf",
+    #             encoding: "UTF-8",
+    #               layout: "pdf.html.erb",
+    #         show_as_html: params[:debug].present? # デバッグ用　パラメタにdebug=1とあるとHTMLを開く
+    #   end
+    # end
+    
+    
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render      pdf: "日報-#{@user.name}-#{@daily_current}",# PDFファイル名
+              encording: "UTF-8",                   # 日本語を使う場合には指定する
+                layout: "pdf.html", #レイアウトファイルの指定。views/layoutsが読まれます。
+              template: "daily_reports/daily_show.html.erb", #テンプレートファイルの指定。viewsフォルダが読み込まれます。
+                 title: "日報-#{@daily_current}"
+      end
+    end
   end
   
   # 日報更新
@@ -54,6 +85,7 @@ class DailyReportsController < ApplicationController
     flash[:success] = "日報を更新しました。"
     redirect_to daily_show_path(date: params[:date])
   end
+  
   
   private
   
