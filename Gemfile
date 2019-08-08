@@ -22,6 +22,8 @@ gem "simple_calendar", "~> 2.0"
 # pdf関連
 gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
+# For PDF Generation
+gem "thinreports"
 
 
 

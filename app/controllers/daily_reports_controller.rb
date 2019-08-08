@@ -41,35 +41,85 @@ class DailyReportsController < ApplicationController
     @user = User.find(params[:user_id])
     @daily_current= params[:date]
     @dailys = DailyReport.where(day: @daily_current, report_name: @user.name)
-    
-  #   respond_to do |format|
-  #   format.html
-  #   format.pdf do
-  #     render pdf: "sample",   # PDF名
-  #           template: "daily_reports/daily_show.html.erb", # viewを対象にする
-  #           encoding: "UTF-8" # 日本語に対応させる
-  #   end
-  # end
-    
-    # respond_to do |format|
-    #   format.html { redirect_to daily_show_path(date: params[:date], format: :pdf, debug: 1) }
-    #   format.pdf do
-    #       render     pdf: "1.pdf",
-    #             encoding: "UTF-8",
-    #               layout: "pdf.html.erb",
-    #         show_as_html: params[:debug].present? # デバッグ用　パラメタにdebug=1とあるとHTMLを開く
-    #   end
-    # end
-    
+    @dailys_title = []
+    @dailys_start = []
+    @dailys_finish = []
+    @dailys_note = []
+    @dailys.each do |daily|
+      title = Article.find(daily.article_id).title
+      @dailys_title.push(title)
+      @dailys_start.push(daily.delivery_start)
+      @dailys_finish.push(daily.delivery_finish)
+      @dailys_note.push(daily.note)
+    end
     
     respond_to do |format|
       format.html
       format.pdf do
-        render      pdf: "日報-#{@user.name}-#{@daily_current}",# PDFファイル名
-              encording: "UTF-8",                   # 日本語を使う場合には指定する
-                layout: "pdf.html", #レイアウトファイルの指定。views/layoutsが読まれます。
-              template: "daily_reports/daily_show.html.erb", #テンプレートファイルの指定。viewsフォルダが読み込まれます。
-                 title: "日報-#{@daily_current}"
+        
+        # Thin ReportsでPDFを作成
+        # 先ほどEditorで作ったtlfファイルを読み込む
+        report = Thinreports::Report.new(layout: "#{Rails.root}/app/pdfs/daily_report.tlf")
+        
+         # 1ページ目を開始
+        report.start_new_page
+        # itemメソッドでtlfファイルのIDを指定し、
+        # valueメソッドで値を設定します
+        report.page.item(:date).value(@daily_current)
+        report.page.item(:name).value(@user.name)
+        # 行き先
+        report.page.item(:delivery1).value(@dailys_title[0])
+        report.page.item(:delivery2).value(@dailys_title[1])
+        report.page.item(:delivery3).value(@dailys_title[2])
+        report.page.item(:delivery4).value(@dailys_title[3])
+        report.page.item(:delivery5).value(@dailys_title[4])
+        report.page.item(:delivery6).value(@dailys_title[5])
+        report.page.item(:delivery7).value(@dailys_title[6])
+        report.page.item(:delivery8).value(@dailys_title[7])
+        report.page.item(:delivery9).value(@dailys_title[8])
+        report.page.item(:delivery10).value(@dailys_title[9])
+        # 納品開始時間
+        report.page.item(:start1).value(@dailys_start[0].strftime("%H:%M")) if @dailys_start[0].present?
+        report.page.item(:start2).value(@dailys_start[1].strftime("%H:%M")) if @dailys_start[1].present?
+        report.page.item(:start3).value(@dailys_start[2].strftime("%H:%M")) if @dailys_start[2].present?
+        report.page.item(:start4).value(@dailys_start[3].strftime("%H:%M")) if @dailys_start[3].present?
+        report.page.item(:start5).value(@dailys_start[4].strftime("%H:%M")) if @dailys_start[4].present?
+        report.page.item(:start6).value(@dailys_start[5].strftime("%H:%M")) if @dailys_start[5].present?
+        report.page.item(:start7).value(@dailys_start[6].strftime("%H:%M")) if @dailys_start[6].present?
+        report.page.item(:start8).value(@dailys_start[7].strftime("%H:%M")) if @dailys_start[7].present?
+        report.page.item(:start9).value(@dailys_start[8].strftime("%H:%M")) if @dailys_start[8].present?
+        report.page.item(:start10).value(@dailys_start[9].strftime("%H:%M")) if @dailys_start[9].present?
+        # 納品終了時間
+        report.page.item(:finish1).value(@dailys_finish[0].strftime("%H:%M")) if @dailys_finish[0].present?
+        report.page.item(:finish2).value(@dailys_finish[1].strftime("%H:%M")) if @dailys_finish[1].present?
+        report.page.item(:finish3).value(@dailys_finish[2].strftime("%H:%M")) if @dailys_finish[2].present?
+        report.page.item(:finish4).value(@dailys_finish[3].strftime("%H:%M")) if @dailys_finish[3].present?
+        report.page.item(:finish5).value(@dailys_finish[4].strftime("%H:%M")) if @dailys_finish[4].present?
+        report.page.item(:finish6).value(@dailys_finish[5].strftime("%H:%M")) if @dailys_finish[5].present?
+        report.page.item(:finish7).value(@dailys_finish[6].strftime("%H:%M")) if @dailys_finish[6].present?
+        report.page.item(:finish8).value(@dailys_finish[7].strftime("%H:%M")) if @dailys_finish[7].present?
+        report.page.item(:finish9).value(@dailys_finish[8].strftime("%H:%M")) if @dailys_finish[8].present?
+        report.page.item(:finish10).value(@dailys_finish[9].strftime("%H:%M")) if @dailys_finish[9].present?
+        # 備考  
+        report.page.item(:note1).value(@dailys_note[0]) if @dailys_note[0].present?
+        report.page.item(:note2).value(@dailys_note[1]) if @dailys_note[1].present?
+        report.page.item(:note3).value(@dailys_note[2]) if @dailys_note[2].present?
+        report.page.item(:note4).value(@dailys_note[3]) if @dailys_note[3].present?
+        report.page.item(:note5).value(@dailys_note[4]) if @dailys_note[4].present?
+        report.page.item(:note6).value(@dailys_note[5]) if @dailys_note[5].present?
+        report.page.item(:note7).value(@dailys_note[6]) if @dailys_note[6].present?
+        report.page.item(:note8).value(@dailys_note[7]) if @dailys_note[7].present?
+        report.page.item(:note9).value(@dailys_note[8]) if @dailys_note[8].present?
+        report.page.item(:note10).value(@dailys_note[9]) if @dailys_note[9].present?
+        
+        # ブラウザでPDFを表示する
+        # disposition: "inline" によりダウンロードではなく表示させている
+        send_data(
+          report.generate,
+          filename:    "日報-#{@user.name}-#{@daily_current}.pdf",
+          type:        "application/pdf",
+          disposition: "inline"
+          )
       end
     end
   end
