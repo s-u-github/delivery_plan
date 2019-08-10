@@ -132,11 +132,11 @@ class ArticlesController < ApplicationController
     gon.base = @article_base
     gon.count = @articles_count
     gon.articles = @articles
-    latitude = []
-    longitude = []
+    latitude = [@article_base.latitude]
+    longitude = [@article_base.longitude]
     address = []
     title = []
-    @articles.each do |article|
+    @articles_delivery.each do |article|
       latitude.push(article.latitude)
       longitude.push(article.longitude)
       address.push(article.address)
