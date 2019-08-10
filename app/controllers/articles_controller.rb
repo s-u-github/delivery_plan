@@ -116,46 +116,46 @@ class ArticlesController < ApplicationController
   end
   
   def plan_list
-    @user = User.find(params[:user_id])
-    @articles_all = @user.articles.all
-    @articles = @user.articles.where(plan_check: true)
-    @articles_count = @user.articles.where(plan_check: true).count
-    @article_base = @user.articles.find_by(base_point: true)
-    @articles_delivery = @user.articles.where(plan_check: true).where.not(base_point: true)
-    
-    # @article_id = []
-    # @articles_delivery.each do |article|
-    #   @article_id.push(article.id)
-    # end
+    if bese_point_present?
+      @user = User.find(params[:user_id])
+      @articles_all = @user.articles.all
+      @articles = @user.articles.where(plan_check: true)
+      @articles_count = @user.articles.where(plan_check: true).count
+      @article_base = @user.articles.find_by(base_point: true)
+      @articles_delivery = @user.articles.where(plan_check: true).where.not(base_point: true)
+      # javascriptで使用
+      gon.base = @article_base
+      gon.count = @articles_count
+      gon.articles = @articles
+      latitude = [@article_base.latitude]
+      longitude = [@article_base.longitude]
+      address = []
+      title = []
       
-    
-    gon.base = @article_base
-    gon.count = @articles_count
-    gon.articles = @articles
-    latitude = [@article_base.latitude]
-    longitude = [@article_base.longitude]
-    address = []
-    title = []
-    @articles_delivery.each do |article|
-      latitude.push(article.latitude)
-      longitude.push(article.longitude)
-      address.push(article.address)
-      title.push(article.title)
-    end
-    gon.latitude = latitude
-    gon.longitude = longitude
-    gon.address = address
-    gon.title = title
-    
-    @articles_all.each do |article|
-      @first_day = first_day(params[:first_day])
-      @last_day = @first_day.end_of_month # 初月の日付を使って月末をインスタンス変数に代
-      (@first_day..@last_day).each do |day|
-        unless article.DailyReports.any? {|daily| daily.day == day} # unless文なのでfalseの場合、下の処理をする。
-          record = article.DailyReports.build(day: day) # Railsの慣習に倣い、あるモデルに関連づいたモデルのデータを生成するのにbuildメソッドを使っている
-          record.save
+      @articles_delivery.each do |article|
+        latitude.push(article.latitude)
+        longitude.push(article.longitude)
+        address.push(article.address)
+        title.push(article.title)
+      end
+      gon.latitude = latitude
+      gon.longitude = longitude
+      gon.address = address
+      gon.title = title
+      
+      @articles_all.each do |article|
+        @first_day = first_day(params[:first_day])
+        @last_day = @first_day.end_of_month # 初月の日付を使って月末をインスタンス変数に代
+        (@first_day..@last_day).each do |day|
+          unless article.DailyReports.any? {|daily| daily.day == day} # unless文なのでfalseの場合、下の処理をする。
+            record = article.DailyReports.build(day: day) # Railsの慣習に倣い、あるモデルに関連づいたモデルのデータを生成するのにbuildメソッドを使っている
+            record.save
+          end
         end
       end
+    else
+      flash[:danger] = "拠点情報がありません。"
+      redirect_to root_url
     end
   end
   

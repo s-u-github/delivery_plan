@@ -3,6 +3,12 @@ User.create!(name:  "テストユーザー１",
             email: "email@gmail.com",
             password:              "password",
             password_confirmation: "password")
+            
+User.create!(name: "テストユーザー２",
+             email: "email2@gmail.com",
+             password:              "password",
+             password_confirmation: "password")
+            
              
 # User.find(1).articles.create!(title: "横浜駅",
 #             postcode: "2200011",
