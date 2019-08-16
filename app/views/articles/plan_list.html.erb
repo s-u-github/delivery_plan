@@ -1,3 +1,4 @@
+<% provide(:title, "配送計画リスト") %>
   <!--<%= javascript_include_tag 'code2_1' %>-->
   <%= javascript_include_tag 'jquery-3.4.1.min.js' %> <!-- jquery本体 読み込み -->
 
@@ -22,61 +23,8 @@
   var count = gon.count;
   var base = gon.base;
   
-  // for (var i = 0; i < count; i++) {
-  //   markerData.push({
-  //     title: title[i],
-  //     lat: latitude[i],
-  //     lng: longitude[i],
-  //     address: address[i]
-  //   });
-  // }
-  
-  // function attachMessage(marker, msg) {
-  // google.maps.event.addListener(marker, 'Click', function(event) {
-  // new google.maps.InfoWindow({
-  //   title: msg
-  //   }).open(marker.getMap(), marker);
-  //   });
-  // }
-  
-  // function initialize() {
-    /* 緯度・経度 */
-    // var latlng = new google.maps.LatLng(base.latitude, base.longitude);
-    /* 地図のオプション設定 */
-    // 地図の作成
-    // var mapLatLng = new google.maps.LatLng({lat: base.latitude, lng: base.longitude}); // 緯度経度のデータ作成
-    // var map = new google.maps.Map(document.getElementById('map_canvas'), { // #sampleに地図を埋め込む
-    //     center: mapLatLng, // 地図の中心を指定
-    //     zoom: 10 // 地図のズームを指定
-    //     });
-    
-    // マーカー毎の処理
-    // for (var i = 0; i < count; i++) {
-    //   markerLatLng = new google.maps.LatLng({lat: markerData[i]['lat'], lng: markerData[i]['lng']}); // 緯度経度のデータ作成
-    //   marker[i] = new google.maps.Marker({ // マーカーの追加
-    //     position: markerLatLng, // マーカーを立てる位置を指定
-    //         map: map // マーカーを立てる地図を指定
-    //   });
-    // }
-      
-      // google.maps.event.addListener(marker[i], 'click', function() {
-      //           showInfoWindow(this);
-      // });
-      /* 情報ウィンドウ表示 */
-      // function showInfoWindow(obj){
-      //     /* 既に開かれていたら閉じる */
-      //     if(infowindow) infowindow.close();
-      //     infowindow=new google.maps.InfoWindow({
-      //         /* クリックしたマーカーのタイトルと緯度・経度を情報ウィンドウに表示 */
-      //         content: obj.getPosition().lat()+", "+obj.getPosition().lng(),
-      //     });
-      //     infowindow.open(map,obj);
-      // }
-  // }
-
         $(function(){
             /* waypts（最大8か所） */
-            // var ary=[
             var ary = [];
             for (var i = 1; i < count; i++) {
               ary.push(new google.maps.LatLng(latitude[i], longitude[i]))
@@ -111,22 +59,22 @@
                 /* 地図オブジェクト生成 */
                 map=new google.maps.Map(document.getElementById("map_canvas"), myOptions);
                 if(!renderFLG) render();
-                $("#roots").empty();
-                var s="";
-                for(var i=0; i<ary.length; i++){
-                    if(i==0){
-                        start=base.title;
-                        end=ary[i];
-                    }else if(i==(ary.length-1)){
-                        start=ary[i];
-                        end=base.title;
-                    }else{
-                        start=ary[i];
-                        end=ary[i+1];
-                    }
-                    s+="<li><a href='#' rel='"+start+"==>"+end+"'>"+start+"==>"+end+"</a></li>";
-                }
-                $("#roots").empty().append(s);
+                // $("#roots").empty();
+                // var s="";
+                // for(var i=0; i<waypts.length; i++){
+                //     if(i==0){
+                //         start=base.title;
+                //         end=waypts[i].location;
+                //     }else if(i==(waypts.length-1)){
+                //         start=waypts[i].location;
+                //         end=base.title;
+                //     }else{
+                //         start=waypts[i].location;
+                //         end=waypts[i+1].location;
+                //     }
+                //     s+="<li><a href='#' rel='"+start+"==>"+end+"'>"+start+"==>"+end+"</a></li>";
+                // }
+                // $("#roots").empty().append(s);
                 curStartSpot=defaultStartSpot;
                 curEndSpot=defaultEndSpot;
                 calcRoute();
@@ -144,18 +92,18 @@
                 /* 右カラムにルート表示 */
                 directionsDisplay.setPanel(document.getElementById("directions_panel"));
                 /* 出発地点・到着地点マーカーが移動された時 */
-                google.maps.event.addListener(directionsDisplay, 'directions_changed',function() {
-                    currentDirections=directionsDisplay.getDirections();
-                    var route=currentDirections.routes[0];
-                    var s="";
-                    for(var i=0; i<route.legs.length; i++) {
-                        var routeSegment=i+1;
-                        s+=route.legs[i].start_address+'to';
-                        s+=route.legs[i].end_address+'\n';
-                        s+=route.legs[i].distance.text;
-                    }
-                    //dbg("directions_changed:"+s);
-                });
+                // google.maps.event.addListener(directionsDisplay, 'directions_changed',function() {
+                //     currentDirections=directionsDisplay.getDirections();
+                //     var route=currentDirections.routes[0];
+                //     var s="";
+                //     for(var i=0; i<route.legs.length; i++) {
+                //         var routeSegment=i+1;
+                //         s+=route.legs[i].start_address+'to';
+                //         s+=route.legs[i].end_address+'\n';
+                //         s+=route.legs[i].distance.text;
+                //     }
+                //     //dbg("directions_changed:"+s);
+                // });
             }
               /* モード変更 */
             $("#mode").bind("change",function(){
@@ -196,7 +144,7 @@
                   flag = false;
                 }
                 var request={
-                      waypoints:_waypts,
+                      waypoints:_waypts,  // 経由地点(指定なしでも可)
                       optimizeWaypoints:true,  // 最適化を有効
                       avoidHighways: flag, // 高速は利用しない
                     origin:curStartSpot,        /* 出発地点 */
@@ -213,14 +161,30 @@
                     }
                 });
             }
+            // $("#roots").empty();
+            // var s="";
+            // for(var i=0; i<_waypts.length; i++){
+            //     if(i==0){
+            //         start=curStartSpot;
+            //         end=_waypts[i].location;
+            //     }else if(i==(_waypts.length-1)){
+            //         start=_waypts[i].location;
+            //         end=curEndSpot;
+            //     }else{
+            //         start=_waypts[i].location;
+            //         end=_waypts[i+1].location;
+            //     }
+            //     s+="<li><a href='#' rel='"+start+"==>"+end+"'>"+start+"==>"+end+"</a></li>";
+            // }
+            // $("#roots").empty().append(s);
               /* 区間を選択した時 */
-            $("#roots").on("click","a",function(e){
-                var rel=$(this).attr("rel").split("===");
-                curStartSpot=rel[0];
-                curEndSpot=rel[1];
-                calcRoute();
-                return false;
-            });
+            // $("#roots").on("click","a",function(e){
+            //     var rel=$(this).attr("rel").split("===");
+            //     curStartSpot=rel[0];
+            //     curEndSpot=rel[1];
+            //     calcRoute();
+            //     return false;
+            // });
             /* ルート表示・非表示切り替え */
             $(".button-group button").click(function(e){
                 $(".button-group button").removeClass("active");
@@ -335,8 +299,8 @@
             <button id="show" class="button active">ルート表示</button>
             <button id="hide" class="button">ルート非表示</button>
         </div>
-        <ol id="roots">
-        </ol>
+        <!--<ol id="roots">-->
+        <!--</ol>-->
         <div id="directions_panel" style="width:100%"></div>
         </div>
         </div><!-- #side -->
@@ -374,7 +338,7 @@
       <% end %>
     </table>
     <%= form_tag report_create_path, method: :patch do |f| %>
-      <%= submit_tag "日報作成", class: "btn btn-danger" %>
+      <%= submit_tag "日報作成", class: "btn btn-danger login" %>
     <% end %>
   </body>
 

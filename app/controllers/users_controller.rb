@@ -6,10 +6,10 @@ class UsersController < ApplicationController
   def create
     @user = User.new(users_params)
     if @user.save
-      flash[:success] = "配送員登録完了しました。"
-      redirect_to root_url
+      flash[:success] = "ユーザーを新規登録完了しました。"
+      log_in @user
+      redirect_to @user
     else
-      flash[:danger] = "入力に誤りがあります。"
       render 'new'
     end
   end

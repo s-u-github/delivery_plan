@@ -6,6 +6,13 @@
 <!--<%= javascript_include_tag 'jquery.validationEngine.js' %> <!-- validationEngine本体 読み込み ---->
 <!--<%= javascript_include_tag 'jquery.validationEngine-ja.js' %> <!-- 日本語ファイル 読み込み ---->
 
-<h3>このアプリは配送効率をよくするために配送ルートを作成するシステムです。</h3>
 
-<%= link_to "ログインする", login_path, class: "btn btn-primary" %>
+<div class="jumbotron">
+  <div class="container">
+    <h1>配送計画システム</h1>
+    <p>
+      このソフトは最適な配送計画を立て、簡単な日報が作れます。
+    </p>
+      <%= link_to "ログイン »", login_path, class: "btn btn-primary login" %>
+  </div>
+</div>

@@ -1,16 +1,23 @@
+
+
+<%= javascript_include_tag 'jquery-3.4.1.min.js' %> <!-- jquery本体 読み込み -->
+<%= javascript_include_tag 'jquery.jpostal.js' %> <!-- jquery.jpostal.js 読み込み -->
+
 <!-- モーダル・ダイアログ -->
-<div class="modal fade" id="new-form" tabindex="-1" role="dialog">>
+<div class="modal fade" id="edit-form" tabindex="-1" tabindex="-1" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h2 class="modal-title">新規登録</h2>
+				<h2 class="modal-title">拠点情報編集</h2>
 				<button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
           <span aria-hidden="true">&times;</span>
         </button>
 			</div>
-			
+
+
       <div class="modal-body">
-        <%= form_for @article, url: user_articles_path, id: "form_id" do |f| %>
+
+        <%= form_for @article, url: base_update_user_articles_path, id: "form_id" do |f| %>
           
           <%= f.label :title %>
           <%= f.text_field :title, class: "form-control" %>
@@ -24,19 +31,37 @@
           <%= f.label :phone_num %>
           <%= f.text_field :phone_num, class: "form-control" %>
           
-          <%= f.submit "登録", class: "btn btn-success" %>
+          <%= f.submit "編集", class: "btn btn-success login" %>
           
         <% end %>
+    
       </div>
     </div> <!-- modal-content -->
   </div> <!-- modal-dialog -->
 </div> <!-- modal fade -->
 
+<!-- 「起動スクリプト」 -->
 <script>
- $('#new-form').on('show.bs.modal', function (event) { // ボタンがクリックされてモーダルが開いたらイベント発生
+$(function () {
+	$('#postcode').jpostal({
+		postcode : [
+			'#postcode'
+		],
+		address : {
+			'#address' : '%3%4%5'
+		}
+	});
+});
+
+$('#edit-form').on('show.bs.modal', function (event) { // ボタンがクリックされてモーダルが開いたらイベント発生
  　
   // クリックされたbuttonを取得
   var button = $(event.relatedTarget); 
   
- });
+});
+
+// $(function(){
+//     $("#form_id").validationEngine();
+// });
+
 </script>

@@ -25,11 +25,6 @@ img {
 
 /* base */
 
-.main-contents {
-  padding-top: 40px;
-  text-align: center;
-}
-
 .base-new {
   text-align: left;
 }
@@ -47,14 +42,69 @@ img {
   height: 40px;
 }
 
+input, textarea, select, .uneditable-input {
+  border: 1px solid #bbb;
+  width: 100%;
+  margin-bottom: 15px;
+  @include box_sizing;
+}
+
 
 /* csv */
 
 .input-group {
+  padding-top: 20px;
   float: right;
 }
 
-.csv_submit {
-  float: right;
+
+/* home */
+
+.home-title {
+  padding-top: 50px;
+  text-align: center;
 }
 
+.login {
+  display: block;
+  margin-top: 30px;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.jumbotron { 
+  background:url(home.jpg) center no-repeat;
+  background-size: cover;
+  padding-top: 80px;
+  padding-bottom: 50px;
+  margin-top: 20px;
+}
+
+.jumbotron h1,
+.jumbotron p {
+  color: navy;
+  text-align: center;
+}
+
+
+/* login */
+
+.title-name {
+  padding: 30px;
+  text-align: center;
+}
+
+/* daily */
+
+.pdf {
+  float: right;
+  margin-bottom: 10px;
+}
+
+
+/* modal */
+
+.modal-title {
+  margin-left: auto;
+}

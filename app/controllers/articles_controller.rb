@@ -54,11 +54,13 @@ class ArticlesController < ApplicationController
     redirect_to user_articles_url
   end
   
+  # 拠点情報新規登録
   def base_new
     @user = User.find(params[:user_id])
     @article = @user.articles.new
   end
   
+  # 拠点情報新規作成
   def base_create
     @user = User.find(params[:user_id])
     @article = @user.articles.build(article_params)
@@ -71,11 +73,13 @@ class ArticlesController < ApplicationController
     end
   end
   
+  # 拠点情報編集
   def base_edit
     @user = User.find(params[:user_id])
     @article = @user.articles.find_by(base_point: true, plan_check: true)
   end
   
+  # 拠点情報更新
   def base_update
     @user = User.find(params[:user_id])
     @article = @user.articles.find_by(base_point: true, plan_check: true)
@@ -88,17 +92,19 @@ class ArticlesController < ApplicationController
     end
   end
   
+  # 拠点情報
   def base_info
     @user = User.find(params[:user_id])
     @article = @user.articles.find_by(base_point: true, plan_check: true)
   end
 
-  
+  # 配送計画作成ページ
   def delivery_plan
     @user = User.find(params[:user_id])
     @articles = @user.articles.where.not(base_point: true)
   end
   
+  # 配送計画作成
   def plan_create
     @user = User.find(params[:user_id])
     if article_invalid?
@@ -115,6 +121,7 @@ class ArticlesController < ApplicationController
     end
   end
   
+  # 配送計画リスト
   def plan_list
     if bese_point_present?
       @user = User.find(params[:user_id])
@@ -155,7 +162,7 @@ class ArticlesController < ApplicationController
       end
     else
       flash[:danger] = "拠点情報がありません。"
-      redirect_to root_url
+      redirect_to base_new_user_articles_url(current_user.id)
     end
   end
   

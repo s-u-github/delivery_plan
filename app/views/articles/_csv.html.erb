@@ -8,9 +8,9 @@
     <!-- display: noneは非表示になっているだけで機能を無効化してるわけではない。又、required属性で入力を必須にしてエラーが出ないようにしている -->
     <%= file_field_tag 'users_file', id: "file_input", style: "display: none;", onchange: "file_selected($(this));" , required: "required" %>
     <%= text_field_tag 'filename',"", id: "filename", disabled: true, class:"form-control" %>
+
+    <%= submit_tag 'CSVをインポート', style: "width: 300px", class: "btn btn-primary csv_submit" %>
   </div>
-  <br>
-  <%= submit_tag 'CSVをインポート', style: "width: 300px", class: "btn btn-primary csv_submit" %>
 <% end %>
 
 <!-- text_field_tagに選択したファイル名を表示させる -->
