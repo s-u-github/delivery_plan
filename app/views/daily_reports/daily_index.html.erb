@@ -1,4 +1,8 @@
-<h1>日報</h1>
+<% provide(:title, "日報ページ") %>
+
+<div class="title-name">
+  <h1>日報</h1>
+</div>
 
 <%= month_calendar do |date| %>
   <%= date.strftime("%-m月%-d日") %>

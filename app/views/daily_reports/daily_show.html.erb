@@ -1,7 +1,7 @@
-<% provide(:title, "配送計画作成") %>
+<% provide(:title, "日報詳細") %>
 
 <div class="title-name">
-  <h1><%= @daily_today %>&emsp;日報</h1>
+  <h1><%= @daily_current %>&emsp;日報</h1>
 </div>
 
 <%= link_to "PDFで表示", daily_show_path(format: "pdf"), :class => 'btn btn-danger pdf' %>

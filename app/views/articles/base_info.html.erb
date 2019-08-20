@@ -6,13 +6,15 @@
 
 <table class="table table-striped">
   <thead>
-    <th>名称：<%= @article.title %></th>
-    <th>郵便番号：<%= @article.postcode %></th>
+    <tr>
+      <td>名称：<%= @article.title %></td>
+      <td>郵便番号：<%= @article.postcode %></td>
+    </tr>
   </thead>
   <tbody>
     <tr>
-      <th>所在地：<%= @article.address %></th>
-      <th>電話番号：<%= @article.phone_num %></th>
+      <td>所在地：<%= @article.address %></td>
+      <td>電話番号：<%= @article.phone_num %></td>
     </tr>
   </tbody>
 </table>

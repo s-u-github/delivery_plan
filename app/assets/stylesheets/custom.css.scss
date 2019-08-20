@@ -22,6 +22,48 @@ img {
   height: 300px;
 }
 
+/* top-page */
+
+.top-button {
+  margin-top: 50px;
+  padding: 20px;
+  width: 100%;
+  // font-size: 20pt;
+}
+
+// 大デバイス（デスクトップ, 1200px 未満）
+@media (min-width: 992px) {
+ .top-button {
+   font-size: 2.0rem;
+ }
+}
+// 中デバイス（タブレット, 992px 未満）
+@media (max-width: 991.98px) {
+ .top-button {
+   font-size: 1.0rem;
+ }
+}
+// 小デバイス（横向きモバイル, 768px 未満）
+@media (max-width: 767.98px) {
+ .top-button {
+   font-size: 1.0rem;
+ }
+}
+// @include media-breakpoint-up(sm) {
+// 極小デバイス（縦向きモバイル, 576px 未満）
+@media (max-width: 575.98px) {
+ .top-button {
+   font-size: 1.0rem;
+ }
+}
+
+.main-container {
+  // background-image: url("<%= asset-path("hogehoge.png") %>")
+  background:url(home.jpg) center no-repeat;
+  margin-top: 20px;
+  height: 500px;
+  background-size:cover;
+}
 
 /* base */
 
@@ -61,8 +103,40 @@ input, textarea, select, .uneditable-input {
 /* home */
 
 .home-title {
-  padding-top: 50px;
+  padding: 20px;
   text-align: center;
+  margin: auto;
+}
+
+.home-image {
+  text-align: center;
+}
+
+// 大デバイス（デスクトップ, 1200px 未満）
+@media (min-width: 992px) {
+ .home-image {
+   width: 100%;
+   max-width: 100%;
+ }
+}
+// 中デバイス（タブレット, 992px 未満）
+@media (max-width: 991.98px) {
+ .top-button {
+   font-size: 1.0rem;
+ }
+}
+// 小デバイス（横向きモバイル, 768px 未満）
+@media (max-width: 767.98px) {
+ .top-button {
+   font-size: 1.0rem;
+ }
+}
+// @include media-breakpoint-up(sm) {
+// 極小デバイス（縦向きモバイル, 576px 未満）
+@media (max-width: 575.98px) {
+ .top-button {
+   font-size: 1.0rem;
+ }
 }
 
 .login {
@@ -74,8 +148,8 @@ input, textarea, select, .uneditable-input {
 }
 
 .jumbotron { 
-  background:url(home.jpg) center no-repeat;
-  background-size: cover;
+  // background:url(home.jpg) center no-repeat;
+  // background-size: cover;
   padding-top: 80px;
   padding-bottom: 50px;
   margin-top: 20px;

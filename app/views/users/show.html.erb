@@ -1,2 +1,52 @@
-<% provide(:title, "ユーザーページ") %>
-<h1>テスト</h1>
+<% provide(:title, "トップページ") %>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-6 col-sm-4 col-md-3">
+      <%= link_to "顧客リスト", "#", class: "btn btn-success top-button" %>
+    </div>
+    <div class="col-xs-6 col-sm-4 col-md-3">
+      <%= link_to "配送計画作成", "#", class: "btn btn-primary top-button" %>
+    </div>
+    <div class="col-xs-6 col-sm-4 col-md-3">
+      <%= link_to "配送計画リスト", "#", class: "btn btn-info top-button" %>
+    </div>
+    <div class="col-xs-6 col-sm-4 col-md-3">
+      <%= link_to "日報", "#", class: "btn btn-danger top-button" %>
+    </div>
+  </div>
+  
+  <div class="main-container">
+    
+  </div>
+      
+  <!--<p>チュートリアルです。</p>-->
+  
+  <!--<p>はじめに拠点の登録をしましょう。=>-->
+  <!--<% if bese_point_present? %>-->
+  <!--  <%= link_to "こちらから", base_info_user_articles_path(current_user.id) %>-->
+  <!--<% else %>-->
+  <!--  <%= link_to "こちらから", base_new_user_articles_path(current_user.id) %>-->
+  <!--<% end %>-->
+  <!--</p>-->
+  
+  <!--<p>次に配送先になる顧客を登録しましょう。=>-->
+  <!--  <%= link_to "こちらから", user_articles_path(current_user.id) %>-->
+  <!--</p>-->
+  
+  <!--<p>準備は完了です。本日の配送先を選んで配送ルートを作成しましょう。=>-->
+  <!--  <%= link_to "こちらから", delivery_plan_user_articles_path(current_user.id) %>-->
+  <!--</p>-->
+  
+  <!--<p>作成が終了したら、配送ルートを確認してみましょう。=>-->
+  <!--  <%= link_to "こちらから", plan_list_user_articles_path(current_user.id, first_day: Date.today) %>-->
+  <!--</p>-->
+  
+  <!--<p>次に日報を作成してみましょう。配送ルート下部から納品時間・納品終了時間を入れて日報作成ボタンを押しましょう。</p>-->
+  
+  <!--<p>作成後は<%= link_to "こちらから", daily_index_path(current_user.id, first_day: Date.today) %>-->
+  <!--のページのカレンダーに作成した日にちの日報が出来上がっているため確認できます。必要に応じてPDFでダウンロードしましょう。-->
+  <!--</p>-->
+  
+  <!--<p>以上が本システムの基本的な使い方です。</p>-->
+</div>
