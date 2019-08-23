@@ -7,6 +7,11 @@
     <%= include_gon %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <%= stylesheet_link_tag 'validationEngine.jquery.css' %> <!-- validationEngine.jquery.css　読み込み -->
+    <%= javascript_include_tag 'jquery-3.4.1.min.js' %> <!-- jquery本体 読み込み -->
+    <%= javascript_include_tag 'jquery.validationEngine.js' %> <!-- validationEngine本体 読み込み -->
+    <%= javascript_include_tag 'jquery.validationEngine-ja.js' %> <!-- 日本語ファイル 読み込み -->
+    <%= javascript_include_tag 'jquery.jpostal.js' %> <!-- jquery.jpostal.js 読み込み -->
     
     <%= render 'layouts/shim' %>
     

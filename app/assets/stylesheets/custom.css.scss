@@ -114,34 +114,38 @@ input, textarea, select, .uneditable-input {
 
 // 大デバイス（デスクトップ, 1200px 未満）
 @media (min-width: 992px) {
- .home-image {
-   width: 100%;
-   max-width: 100%;
+ .img-fluid {
+   width: 200px;
+   height: auto;
  }
 }
 // 中デバイス（タブレット, 992px 未満）
 @media (max-width: 991.98px) {
- .top-button {
-   font-size: 1.0rem;
+ .img-fluid {
+   max-width: 200px;
+   height: auto;
  }
 }
 // 小デバイス（横向きモバイル, 768px 未満）
 @media (max-width: 767.98px) {
- .top-button {
-   font-size: 1.0rem;
+ .img-fluid {
+   max-width: 100%;
+   height: auto;
  }
 }
 // @include media-breakpoint-up(sm) {
 // 極小デバイス（縦向きモバイル, 576px 未満）
 @media (max-width: 575.98px) {
- .top-button {
-   font-size: 1.0rem;
+ .img-fluid {
+   max-width: 100%;
+   height: auto;
  }
 }
 
 .login {
   display: block;
-  margin-top: 30px;
+  margin-top: 20px;
+  margin-bottom: 20px;
   width: 50%;
   margin-left: auto;
   margin-right: auto;

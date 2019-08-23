@@ -23,3 +23,24 @@
   編集
 </button>
 <%= render 'base_edit' %>
+
+<!-- 「起動スクリプト」 -->
+<script>
+
+  $(function () {
+  	$('#postcode').jpostal({
+  		postcode : [
+  			'#postcode'
+  		],
+  		address : {
+  			'#address' : '%3%4%5'
+  		}
+  	});
+  });
+  
+  // jQuery-validate
+  $(function(){
+      $("#form_1").validationEngine();
+  });
+
+</script>

@@ -1,8 +1,4 @@
 
-
-<%= javascript_include_tag 'jquery-3.4.1.min.js' %> <!-- jquery本体 読み込み -->
-<%= javascript_include_tag 'jquery.jpostal.js' %> <!-- jquery.jpostal.js 読み込み -->
-
 <!-- モーダル・ダイアログ -->
 <div class="modal fade" id="edit-form" tabindex="-1" tabindex="-1" role="dialog">
 	<div class="modal-dialog">
@@ -17,19 +13,19 @@
 
       <div class="modal-body">
 
-        <%= form_for @article, url: base_update_user_articles_path, id: "form_id" do |f| %>
-          
+        <%= form_for @article, url: base_update_user_articles_path, html: { role: 'form', :id => "form_1" } do |f| %>
+
           <%= f.label :title %>
-          <%= f.text_field :title, class: "form-control" %>
+          <%= f.text_field :title, class: "form-control validate[required]" %>
           
           <%= f.label :postcode %>
-          <%= f.text_field :postcode, class: "form-control", id: "postcode" %>
+          <%= f.text_field :postcode, class: "form-control validate[required]", id: "postcode" %>
           
           <%= f.label :address %>
-          <%= f.text_field :address, class: "form-control", id: "address" %>
+          <%= f.text_field :address, class: "form-control validate[required]", id: "address" %>
           
           <%= f.label :phone_num %>
-          <%= f.text_field :phone_num, class: "form-control" %>
+          <%= f.text_field :phone_num, class: "form-control validate[required, custom[phone]]" %>
           
           <%= f.submit "編集", class: "btn btn-success login" %>
           
@@ -40,28 +36,3 @@
   </div> <!-- modal-dialog -->
 </div> <!-- modal fade -->
 
-<!-- 「起動スクリプト」 -->
-<script>
-$(function () {
-	$('#postcode').jpostal({
-		postcode : [
-			'#postcode'
-		],
-		address : {
-			'#address' : '%3%4%5'
-		}
-	});
-});
-
-$('#edit-form').on('show.bs.modal', function (event) { // ボタンがクリックされてモーダルが開いたらイベント発生
- 　
-  // クリックされたbuttonを取得
-  var button = $(event.relatedTarget); 
-  
-});
-
-// $(function(){
-//     $("#form_id").validationEngine();
-// });
-
-</script>

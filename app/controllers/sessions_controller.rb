@@ -1,7 +1,6 @@
 class SessionsController < ApplicationController
   
   def new
-    
   end
   
   def create
@@ -10,8 +9,8 @@ class SessionsController < ApplicationController
       log_in user
       redirect_to user
     else
-      flash.now[:danger] = "情報が一致しませんでした。"
-      render 'new'
+      flash[:danger] = "メールアドレスとパスワードが一致しませんでした。"
+      redirect_to root_url
     end
   end
   

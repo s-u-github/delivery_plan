@@ -13,6 +13,7 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 Rails.application.config.assets.precompile += %w( jquery-3.4.1.min.js )
+Rails.application.config.assets.precompile += %w( jquery-1.8.2.min.js )
 Rails.application.config.assets.precompile += %w( jquery.jpostal.js )
 Rails.application.config.assets.precompile += %w( validationEngine.jquery.css )
 Rails.application.config.assets.precompile += %w( jquery.validationEngine.js )

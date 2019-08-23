@@ -1,28 +1,20 @@
 <% provide(:title, "ホーム") %>
 
-<%= stylesheet_link_tag 'validationEngine.jquery' %> <!-- validationEngine.jquery.css　読み込み -->
-<%= javascript_include_tag 'jquery-3.4.1.min.js' %> <!-- jquery本体 読み込み -->
-<%= javascript_include_tag 'jquery.jpostal.js' %> <!-- jquery.jpostal.js 読み込み -->
-<!--<%= javascript_include_tag 'jquery.validationEngine.js' %> <!-- validationEngine本体 読み込み ---->
-<!--<%= javascript_include_tag 'jquery.validationEngine-ja.js' %> <!-- 日本語ファイル 読み込み ---->
-
-
-<!--<div class="jumbotron">-->
-  <div class="container">
-    <div class="home-image">
-      <%= image_tag '1.png', class: "img-fluid" %>
-      <%= image_tag '2.png', class: "img-fluid" %>
-      <%= image_tag '3.png', class: "img-fluid" %>
-    </div>
-    <div class="home-title">
-      <h1>配送計画システム</h1>
-      <p>このソフトは最適な配送計画を立て、簡単な日報が作れます。</p>
-    </div>
-    <%= link_to "ログイン »", login_path, class: "btn btn-primary login" %>
-    <div class="home-image">
-      <%= image_tag '4.png' %>
-      <%= image_tag '5.png' %>
-      <%= image_tag '6.png' %>
-    </div>
+<div class="container">
+  <div class="home-image">
+    <%= image_tag '1.png', class: "img-fluid" %>
+    <%= image_tag '2.png', class: "img-fluid" %>
+    <%= image_tag '3.png', class: "img-fluid" %>
   </div>
-<!--</div>-->
+  <div class="home-title">
+    <h1>配送計画システム</h1>
+    <p>このソフトは最適な配送計画を立て、簡単な日報が作れます。</p>
+  </div>
+  <button data-toggle="modal" data-target="#login-form" class="btn btn-primary login">ログイン »</button>
+  <%= render 'sessions/new' %>
+  <div class="home-image">
+    <%= image_tag '4.png', class: "img-fluid" %>
+    <%= image_tag '5.png', class: "img-fluid" %>
+    <%= image_tag '6.png', class: "img-fluid" %>
+  </div>
+</div>

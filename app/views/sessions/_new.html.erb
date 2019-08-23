@@ -1,0 +1,29 @@
+
+
+<!-- モーダル・ダイアログ -->
+<div class="modal fade" id="login-form" tabindex="-1" role="dialog">>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h2 class="modal-title">ログイン</h2>
+				<button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+          <span aria-hidden="true">&times;</span>
+        </button>
+			</div>
+      <div class="modal-body">
+        <%= form_for(:session, url: login_path)  do |f| %>
+    
+          <%= f.label :email %>
+          <%= f.email_field :email, class: 'form-control' %>
+    
+          <%= f.label :password %>
+          <%= f.password_field :password, class: 'form-control' %>
+          
+          <p>ユーザー登録がまだの場合は<%= link_to "こちらから", signup_path %>登録</p>
+    
+          <%= f.submit "ログイン »", class: "btn btn-primary login" %>
+        <% end %>
+      </div>
+    </div> <!-- modal-content -->
+  </div> <!-- modal-dialog -->
+</div> <!-- modal fade -->

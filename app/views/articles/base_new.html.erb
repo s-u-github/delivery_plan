@@ -1,8 +1,5 @@
 <% provide(:title, "拠点情報") %>
 
-<%= javascript_include_tag 'jquery-3.4.1.min.js' %> <!-- jquery本体 読み込み -->
-<%= javascript_include_tag 'jquery.jpostal.js' %> <!-- jquery.jpostal.js 読み込み -->
-
 <div class="title-name">
   <h1>拠点情報登録</h1>
 </div>
@@ -10,19 +7,20 @@
 <div class="row justify-content-center">
   <div class="col-md-6 col-md-offset-3">
     
-    <%= form_for @article, url: base_create_user_articles_path, id: "form_id" do |f| %>
+    <%= form_for @article, url: base_create_user_articles_path, html: { role: 'form', :id => "form_1" } do |f| %>
+      <%= render 'shared/article_error_messages', object: @article %>   <!-- 登録失敗時のエラーメッセージ -->
       
       <%= f.label :title %>
-      <%= f.text_field :title, class: "form-control" %>
+      <%= f.text_field :title, class: "form-control validate[required]" %>
       
       <%= f.label :postcode %>
-      <%= f.text_field :postcode, class: "form-control", id: "postcode" %>
+      <%= f.text_field :postcode, class: "form-control validate[required]", id: "postcode" %>
       
       <%= f.label :address %>
-      <%= f.text_field :address, class: "form-control", id: "address" %>
+      <%= f.text_field :address, class: "form-control validate[required]", id: "address" %>
       
       <%= f.label :phone_num %>
-      <%= f.text_field :phone_num, class: "form-control" %>
+      <%= f.text_field :phone_num, class: "form-control validate[required, custom[phone]]" %>
       
       <%= f.submit "登録", class: "btn btn-success login" %>
       
@@ -43,8 +41,8 @@ $(function () {
 	});
 });
 
-// $(function(){
-//     $("#form_id").validationEngine();
-// });
+$(function(){
+    $("#form_1").validationEngine();
+});
 
 </script>

@@ -1,11 +1,13 @@
 class ArticlesController < ApplicationController
   
+  # 顧客一覧
   def index
     @user = User.find(params[:user_id])
     @articles = @user.articles.where.not(base_point: true)
     @article = @user.articles.new
   end
   
+  # 顧客登録
   def create
     @user = User.find(params[:user_id])
     if params[:commit] == "CSVをインポート"
@@ -26,26 +28,26 @@ class ArticlesController < ApplicationController
       @article = @user.articles.build(article_params)
       if @article.save
         flash[:success] = "登録完了"
-        redirect_to user_articles_url
       else
-        flash.now[:danger] = "入力が足りません。"
-        render 'index'
+        flash[:danger] = "登録に失敗しました。"
       end
+      redirect_to user_articles_url
     end
   end
   
+  # 顧客更新
   def update
     @user = User.find(params[:user_id])
     @article = @user.articles.find(params[:id])
     if @article.update_attributes(article_params)
       flash[:success] = "登録情報を更新しました。"
-      redirect_to user_articles_url
     else
-      flash.now[:danger] = "ダメです。"
-      render 'index'
+      flash[:danger] = "更新に失敗しました。。"
     end
+      redirect_to user_articles_url
   end
   
+  # 顧客削除
   def destroy
     @user = User.find(params[:user_id])
     @article = @user.articles.find(params[:id])
@@ -68,7 +70,6 @@ class ArticlesController < ApplicationController
       flash[:success] = "登録完了"
       redirect_to base_info_user_articles_url
     else
-      flash.now[:danger] = "入力が足りません。"
       render 'base_new'
     end
   end
@@ -87,7 +88,6 @@ class ArticlesController < ApplicationController
       flash[:success] = "編集完了"
       redirect_to base_info_user_articles_url
     else
-      flash.now[:danger] = "入力が足りません。"
       render 'base_edit'
     end
   end
@@ -161,7 +161,7 @@ class ArticlesController < ApplicationController
         end
       end
     else
-      flash[:danger] = "拠点情報がありません。"
+      flash[:danger] = "拠点情報がありません。はじめに拠点情報を登録してください。"
       redirect_to base_new_user_articles_url(current_user.id)
     end
   end
