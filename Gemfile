@@ -24,6 +24,8 @@ gem 'wkhtmltopdf-binary'
 gem 'wicked_pdf'
 # For PDF Generation
 gem "thinreports"
+# コンソール表示変更
+gem 'pry-rails'
 
 
 

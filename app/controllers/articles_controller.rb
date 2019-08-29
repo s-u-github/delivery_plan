@@ -124,6 +124,7 @@ class ArticlesController < ApplicationController
   # 配送計画リスト
   def plan_list
     if bese_point_present?
+
       @user = User.find(params[:user_id])
       @articles_all = @user.articles.all
       @articles = @user.articles.where(plan_check: true)

@@ -1,8 +1,5 @@
 <% provide(:title, "配送計画リスト") %>
-  <!--<%= javascript_include_tag 'code2_1' %>-->
-  <%= javascript_include_tag 'jquery-3.4.1.min.js' %> <!-- jquery本体 読み込み -->
 
-  
   <!-- スマートフォン向けviewportの指定 -->
   <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
   <!-- Google Maps APIの読み込み -->
@@ -12,9 +9,8 @@
   <!--</script>-->
   
   
-  
 <script type="text/javascript">
-  
+
   var latitude = gon.latitude;
   var longitude = gon.longitude;
   var articles = gon.articles
@@ -86,11 +82,12 @@
                 /* ルートをレンダリング */
                 directionsDisplay=new google.maps.DirectionsRenderer({
                     "map": map,
-                    "preserveViewport": true,
-                    "draggable": false
+                    // "preserveViewport": true,
+                    "draggable": false,
+                    "suppressMarkers": false // デフォルトのマーカーを削除
                 });
                 /* 右カラムにルート表示 */
-                // directionsDisplay.setPanel(document.getElementById("directions_panel"));
+                directionsDisplay.setPanel(document.getElementById("directions_panel"));
                 /* 出発地点・到着地点マーカーが移動された時 */
                 // google.maps.event.addListener(directionsDisplay, 'directions_changed',function() {
                 //     currentDirections=directionsDisplay.getDirections();
@@ -143,7 +140,7 @@
                     break;
                 }
                 
-                  if(!renderFLG) render();
+                if(!renderFLG) render();
                 if(curStartSpot==defaultStartSpot && curEndSpot==defaultEndSpot){
                     console.log("全ルート");
                     //全ルート
@@ -153,22 +150,67 @@
                     _waypts=[];
                 }
                 var request={
-                      waypoints:_waypts,  // 経由地点(指定なしでも可)
-                      optimizeWaypoints:true,  // 最適化を有効
-                      avoidHighways:flag, // 高速は利用しない
+                    waypoints:_waypts,  // 経由地点(指定なしでも可)
+                    optimizeWaypoints:true,  // 最適化を有効
+                    avoidHighways:flag, // 高速は利用しない
                     origin:curStartSpot,        /* 出発地点 */
                     destination:curEndSpot,        /* 到着地点 */
                     travelMode:mode,        /* 交通手段 */
                 };
+
                 /* ルート描画 */
                 directionsService.route(request, function(response, status) {
+                    
+                  if (status==google.maps.DirectionsStatus.OK) {
                     dbg(response);
-                    if (status==google.maps.DirectionsStatus.OK) {
-                        directionsDisplay.setDirections(response);
-                    }else{
-                        alert("その交通手段はリクエスト結果がありません\nstatus:"+status);
-                    }
+                    directionsDisplay.setDirections(response);
+                    calcRoute(response);
+                  
+                  }else{
+                      alert("その交通手段はリクエスト結果がありません\nstatus:"+status);
+                  }
+                    
                 });
+                
+                function calcRoute(response){
+                  var start = []; // 拠点
+                  var leg = []; // 経由点
+                  
+                  response.routes[0].legs[0].start_address = '拠点：' + base.title; //start_address 名前変更
+                  start.push(response.routes[0].legs[0].start_address); // 変更した名前をstart配列にpush
+                  for(var i=0; i<response.routes[0].legs.length; i++){
+                    leg.push(response.routes[0].legs[i].start_location); // addressをpush
+                  }
+                  // document.getElementById("start").innerHTML = start;
+                  var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+                  for(var i=1; i<response.routes[0].legs.length; i++){
+                    document.getElementById("start_number").innerHTML = alphabet[0] + ' , ' + alphabet[response.routes[0].legs.length -1 + 1]
+                    document.getElementById("start").innerHTML = start[0];
+                    document.getElementById(`number${i}`).innerHTML = alphabet[i];
+                    document.getElementById(`leg${i}`).innerHTML = leg[i];
+                  }
+                }
+                
+                // $(function(){
+                //   $.ajax ({
+                //     url: '/users/1/articles/plan_list',
+                //     type: 'GET',
+                //     dataType: 'html',
+                //     async: true,
+                //     data: {
+                //       st: st
+                //     },
+                //     success : function(response){
+                //       alert('成功');
+                //   　},
+                //     error: function(){
+                //         //通信失敗時の処
+                //         alert('通信失敗');
+                //     }
+                //   });
+                // });
+                
+                
             }
             // $("#roots").empty();
             // var s="";
@@ -231,7 +273,7 @@
     <!-- 地図の埋め込み表示 -->
     <div id="map_canvas" style="width: 100%; height: 700px"></div>
     <!--<div id="route" style="width: 700px; height: 400px;overflow: scroll"></div>-->
-    
+  
         <div id="side">
         <div class="inner">
         <p>
@@ -252,10 +294,39 @@
         <!--</div>-->
         <!--<ol id="roots">-->
         <!--</ol>-->
-        <div id="directions_panel" style="width:100%"></div>
+        <!--<div id="directions_panel" style="width:100%"></div>-->
         </div>
         </div><!-- #side -->
-        <br clear="all" />
+        <!--<br clear="all" />-->
+        
+        <table class="table table-striped">
+
+          <tr>
+            <th>マーカー</th>
+            <th>行き先</th>
+            <th>納品開始</th>
+            <th>納品終了</th>
+          </tr>
+
+          <tr>
+            <td><div id="start_number"></div></td>
+            <td><div id="start"></div></td>
+            <td></td>
+            <td></td>
+          </tr>
+          
+          <% i = 1 %>
+          <% while i < @articles_count %>
+          <tr>
+            <td><div id=<%= "number#{i}" %>></td>
+            <td><div id=<%="leg#{i}" %>></div></td>
+            <td></td>
+            <td></td>
+          <% i += 1 %>
+          <% end %>
+          </tr>
+        
+        </table>
     
     
     <table class="table table-striped">
