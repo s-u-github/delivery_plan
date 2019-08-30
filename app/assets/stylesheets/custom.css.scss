@@ -180,9 +180,21 @@ input, textarea, select, .uneditable-input {
   margin-bottom: 10px;
 }
 
+.daily_report {
+  display: block;
+  margin-left: auto;
+  width: 30%;
+}
+
 
 /* modal */
 
 .modal-title {
   margin-left: auto;
+}
+
+/* plan_list */
+
+.inner {
+  display: flex;
 }

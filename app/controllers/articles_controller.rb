@@ -124,7 +124,6 @@ class ArticlesController < ApplicationController
   # 配送計画リスト
   def plan_list
     if bese_point_present?
-
       @user = User.find(params[:user_id])
       @articles_all = @user.articles.all
       @articles = @user.articles.where(plan_check: true)
@@ -161,6 +160,15 @@ class ArticlesController < ApplicationController
           end
         end
       end
+      
+      # if params[:leg]
+      #   flash[:success]="成功"
+      #   redirect_to root_url
+      # else
+      #   flash[:danger]="失敗"
+      #   redirect_to root_url
+      # end
+      
     else
       flash[:danger] = "拠点情報がありません。はじめに拠点情報を登録してください。"
       redirect_to base_new_user_articles_url(current_user.id)

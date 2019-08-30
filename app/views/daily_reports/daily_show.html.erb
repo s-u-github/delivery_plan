@@ -21,7 +21,7 @@
         <% @dailys.each do |daily| %>
           <%= fields_for "daily_reports[]", daily do |af| %>
             <tr>
-              <td><%= Article.find(daily.article_id).title  %></td>
+              <td>名称：<%= Article.find(daily.article_id).title  %><br>所在地：<%= Article.find(daily.article_id).address %></td>
               <td><%= af.time_field :delivery_start, class: 'form-control' %></td>
               <td><%= af.time_field :delivery_finish, class: 'form-control' %></td>
               <td><%= af.text_field :note, class: 'form-control' %></td>
