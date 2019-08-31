@@ -13,10 +13,10 @@
       <div class="modal-body">
         <%= form_for(:session, url: login_path)  do |f| %>
     
-          <%= f.label :email %>
+          <%= f.label :email, "メールアドレス" %>
           <%= f.email_field :email, class: 'form-control' %>
     
-          <%= f.label :password %>
+          <%= f.label :password, "パスワード" %>
           <%= f.password_field :password, class: 'form-control' %>
           
           <p>ユーザー登録がまだの場合は<%= link_to "こちらから", signup_path %>登録</p>
