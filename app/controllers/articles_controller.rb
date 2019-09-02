@@ -107,18 +107,12 @@ class ArticlesController < ApplicationController
   # 配送計画作成
   def plan_create
     @user = User.find(params[:user_id])
-    if article_invalid?
       plan_create_params.each do |key, value|
-      # @items = plan_create_params.keys.each do |id|
         article = Article.find(key)
         article.update_attributes(plan_check: value[:plan_check])
       end
       flash[:success] = "配送計画作成完了"
-      redirect_to delivery_plan_user_articles_url(current_user.id)
-    else
-      flash[:danger] = "経由地点が規約より多いです。"
-      render 'delivery_plan'
-    end
+      redirect_to plan_list_user_articles_path(current_user.id, first_day: Date.today)
   end
   
   # 配送計画リスト
@@ -130,6 +124,7 @@ class ArticlesController < ApplicationController
       @articles_count = @user.articles.where(plan_check: true).count
       @article_base = @user.articles.find_by(base_point: true)
       @articles_delivery = @user.articles.where(plan_check: true).where.not(base_point: true)
+
       # javascriptで使用
       gon.base = @article_base
       gon.count = @articles_count
@@ -160,15 +155,6 @@ class ArticlesController < ApplicationController
           end
         end
       end
-      
-      # if params[:leg]
-      #   flash[:success]="成功"
-      #   redirect_to root_url
-      # else
-      #   flash[:danger]="失敗"
-      #   redirect_to root_url
-      # end
-      
     else
       flash[:danger] = "拠点情報がありません。はじめに拠点情報を登録してください。"
       redirect_to base_new_user_articles_url(current_user.id)

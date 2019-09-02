@@ -85,7 +85,7 @@
                     "map": map,
                     // "preserveViewport": true,
                     "draggable": false,
-                    "suppressMarkers": false // デフォルトのマーカーを削除
+                    // "suppressMarkers": true // デフォルトのマーカーを削除
                 });
                 /* 右カラムにルート表示 */
                 directionsDisplay.setPanel(document.getElementById("directions_panel"));
@@ -182,18 +182,21 @@
                     leg.push(response.routes[0].legs[i].start_address); // addressをpush
                     distance.push(response.routes[0].legs[i].distance.text); // 距離をpush
                     duration.push(response.routes[0].legs[i].duration.text); // 予測時間をpush
+                    // new google.maps.Marker({position:response.routes[0].legs[i].start_location, map:map});
                   }
-                  // document.getElementById("start").innerHTML = start;
+
                   var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
                   for(var i=0; i<response.routes[0].legs.length; i++){
-                    // document.getElementById("start_number").innerHTML = alphabet[0] + ' , ' + alphabet[response.routes[0].legs.length -1 + 1]
-                    // document.getElementById("start").innerHTML = start[0];
+
                     if (i==0){
                       document.getElementById(`number${i}`).innerHTML = alphabet[response.routes[0].legs.length -1 + 1] + ":拠点";
+                      document.getElementById(`next${i}`).innerHTML = alphabet[response.routes[0].legs.length -1 + 1] + '→' + alphabet[i+1];
                     }else{
                       document.getElementById(`number${i}`).innerHTML = alphabet[i];
+                      document.getElementById(`next${i}`).innerHTML = alphabet[i] + '→' + alphabet[i+1];
                     }
-                    document.getElementById(`leg${i}`).innerHTML = leg[i];
+                    document.getElementById(`leg${i}`).innerHTML = 
+                      `<a href="https://www.google.com/maps/dir/?api=1&destination=${leg[i]}">${leg[i]}</a>`;
                     document.getElementById(`distance${i}`).innerHTML = distance[i];
                     document.getElementById(`duration${i}`).innerHTML = duration[i];
                   }
@@ -338,10 +341,10 @@
         
         <table class="table table-striped">
           <thead class="table-head">
-            <tr>
+            <tr style="text-align: center;">
               <th>マーカー</th>
               <th>行き先</th>
-              <th>距離</th>
+              <th colspan="2">距離</th>
               <th>予測時間</th>
               <!--<th>開始</th>-->
               <!--<th>終了</th>-->
@@ -353,16 +356,10 @@
             <% while i < @articles_count %>
             <tr>
               <th><div id=<%= "number#{i}" %>></th>
-              <td><div id=<%="leg#{i}" %>></div></td>
+              <td><div id=<%= "leg#{i}" %>></div></td>
+              <td><div id=<%= "next#{i}" %>></div></td>
               <td><div id=<%= "distance#{i}" %>></div></td>
-              <td><div id=<%= "duration#{i}" %>></div></td>
-              <!--<% if i == 0 %>-->
-              <!--  <td>拠点</td>-->
-              <!--  <td>拠点</td>-->
-              <!--<% else %>-->
-              <!--  <td><%= button_to "開始", "#", class: "btn btn-success" %></td>-->
-              <!--  <td><%= button_to "終了", "#", class: "btn btn-primary" %></td>-->
-              <!--<% end %>-->
+              <td style="text-align: right;"><div id=<%= "duration#{i}" %>></div></td>
             </tr>
             <% i += 1 %>
             <% end %>
@@ -370,37 +367,6 @@
         
         </table>
     
-    
-    <!--<table class="table table-striped">-->
-    <!--  <tr>-->
-    <!--    <th>番号</th>-->
-    <!--    <th>行き先</th>-->
-    <!--    <th>納品開始</th>-->
-    <!--    <th>納品終了</th>-->
-    <!--  </tr>-->
-      
-    <!--  <% @articles_delivery.each do |article| %>-->
-
-    <!--    <tr>-->
-    <!--      <td></td>-->
-    <!--      <td><%= article.title %></td>-->
-    <!--      <td>-->
-    <!--        <% if article.DailyReports.find_by(day: Date.today).delivery_start.nil? %>-->
-    <!--          <%= button_to "開始", delivery_time_user_articles_path(article_id: article.id), class: "btn btn-success" %>-->
-    <!--        <% else %>-->
-    <!--          <%= article.DailyReports.find_by(day: Date.today).delivery_start.strftime("%H時%M分") %>-->
-    <!--        <% end %>-->
-    <!--      </td>-->
-    <!--      <td>-->
-    <!--        <% if article.DailyReports.find_by(day: Date.today).delivery_finish.nil? %>-->
-    <!--          <%= button_to "終了", delivery_time_user_articles_path(article_id: article.id), class: "btn btn-primary" %>-->
-    <!--        <% else %>-->
-    <!--          <%= article.DailyReports.find_by(day: Date.today).delivery_finish.strftime("%H時%M分") %>-->
-    <!--        <% end %>-->
-    <!--      </td>-->
-    <!--    </tr>-->
-    <!--  <% end %>-->
-    <!--</table>-->
 
   </body>
 

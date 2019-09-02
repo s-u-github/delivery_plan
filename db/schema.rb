@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190801020500) do
+ActiveRecord::Schema.define(version: 20190902074736) do
 
   create_table "articles", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20190801020500) do
     t.string "note"
     t.integer "article_id"
     t.string "report_name"
+    t.boolean "absence", default: false
     t.index ["article_id"], name: "index_daily_reports_on_article_id"
   end
 

@@ -13,6 +13,7 @@
           <th>行き先</th>
           <th>納品開始時間</th>
           <th>納品終了時間</th>
+          <th>不在</th>
           <th>備考</th>
         </tr>
       </thead>
@@ -24,6 +25,7 @@
               <td>名称：<%= Article.find(daily.article_id).title  %><br>所在地：<%= Article.find(daily.article_id).address %></td>
               <td><%= af.time_field :delivery_start, class: 'form-control' %></td>
               <td><%= af.time_field :delivery_finish, class: 'form-control' %></td>
+              <td><%= af.check_box :absence, {}, "true", "false" %></td>
               <td><%= af.text_field :note, class: 'form-control' %></td>
             </tr>
           <% end %>

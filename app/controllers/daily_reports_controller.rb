@@ -25,8 +25,8 @@ class DailyReportsController < ApplicationController
       daily.update_attributes(report_name: @user.name)
     end
     # 移動するかどうかの確認をする動作を追加する
-    flash[:success] = "成功（一時的に表示している）"
-    redirect_to plan_list_user_articles_url(user_id: current_user.id)
+    flash[:success] = "日報作成完了"
+    redirect_to daily_show_path(date: Date.today)
   end
   
   # 日報一覧表示
@@ -40,7 +40,7 @@ class DailyReportsController < ApplicationController
   def daily_show
     @user = User.find(params[:user_id])
     @daily_current= params[:date]
-    @dailys = DailyReport.where(day: @daily_current, report_name: @user.name)
+    @dailys = DailyReport.where(day: @daily_current, report_name: @user.name).order('delivery_start')
     @dailys_title = []
     @dailys_start = []
     @dailys_finish = []
@@ -128,18 +128,25 @@ class DailyReportsController < ApplicationController
   def daily_update
     @user = User.find(params[:user_id])
     @dailys = DailyReport.where(day: params[:date], report_name: @user.name)
-    daily_params.each do |key, value|
-      daily = DailyReport.find(key)
-      daily.update_attributes(delivery_start: value[:delivery_start], delivery_finish: value[:delivery_finish], note: value[:note])
+    if delivery_time_invalid?
+      daily_params.each do |key, value|
+        daily = DailyReport.find(key)
+        daily.update_attributes(delivery_start: value[:delivery_start], delivery_finish: value[:delivery_finish],
+                                absence: value[:absence],note: value[:note])
+      end
+      flash[:success] = "日報を更新しました。"
+      redirect_to daily_show_path(date: params[:date])
+    else
+      flash[:danger] = "不正な時間入力がありました。再入力して下さい。"
+      redirect_to daily_show_path(date: params[:date])
     end
-    flash[:success] = "日報を更新しました。"
-    redirect_to daily_show_path(date: params[:date])
   end
   
   
   private
   
+    # 日報更新
     def daily_params
-      params.permit(daily_reports: [:delivery_start, :delivery_finish, :note])[:daily_reports]
+      params.permit(daily_reports: [:delivery_start, :delivery_finish, :note, :absence])[:daily_reports]
     end
 end

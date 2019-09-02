@@ -18,7 +18,7 @@
           <%= f.text_field :title, class: "form-control validate[required]" %>
           
           <%= f.label :postcode %>
-          <%= f.text_field :postcode, class: "form-control validate[required]", id: "postcode" %>
+          <%= f.text_field :postcode, class: "form-control validate[required, custom[zip]]", id: "postcode" %>
           
           <%= f.label :address %>
           <%= f.text_field :address, class: "form-control validate[required]", id: "address" %>
