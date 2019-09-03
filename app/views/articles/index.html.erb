@@ -35,8 +35,8 @@
             <a data-toggle="modal" data-target="#<%= article.title %>">
             編集
             </a>
-            <%= render partial: 'edit_form', locals: {article: article} %>
-             / <%= link_to "削除", user_article_path(id: article, user_id: @user.id), method: :delete, data: {confirm: "削除してよろしいですか？"} %>
+            <%= render partial: 'edit_form', locals: {article: article} %><br>
+            <%= link_to "削除", user_article_path(id: article, user_id: @user.id), method: :delete, data: {confirm: "削除してよろしいですか？"} %>
           </div>
         </td>
       </tr>

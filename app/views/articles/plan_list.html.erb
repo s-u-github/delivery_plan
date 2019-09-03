@@ -196,7 +196,8 @@
                       document.getElementById(`next${i}`).innerHTML = alphabet[i] + '→' + alphabet[i+1];
                     }
                     document.getElementById(`leg${i}`).innerHTML = 
-                      `<a href="https://www.google.com/maps/dir/?api=1&destination=${leg[i]}">${leg[i]}</a>`;
+                      `<a target="_blank" href=
+                      "https://www.google.com/maps/dir/?api=1&destination=${leg[i]}&travelmode=driving">${leg[i]}</a>`;
                     document.getElementById(`distance${i}`).innerHTML = distance[i];
                     document.getElementById(`duration${i}`).innerHTML = duration[i];
                   }
@@ -321,11 +322,9 @@
             <div class="daily_report">
               <button data-toggle="modal" data-target="#daily-modal" class="btn btn-success daily_report">納品時間</button>
                 <%= render 'daily_time' %>
-              <div class="daily_create">
                 <%= form_tag report_create_path, method: :patch do |f| %>
                   <%= submit_tag "日報作成", class: "btn btn-danger daily_report" %>
                 <% end %>
-              </div>
             </div>
         </p>
         <!--<div class="button-group">-->

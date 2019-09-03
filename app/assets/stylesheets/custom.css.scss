@@ -166,6 +166,14 @@ input, textarea, select, .uneditable-input {
 }
 
 
+/* show */
+
+.show-img {
+  width: 100%;
+  height: auto;
+  margin-top: 20px;
+}
+
 /* login */
 
 .title-name {
@@ -180,12 +188,6 @@ input, textarea, select, .uneditable-input {
   margin-bottom: 10px;
 }
 
-.daily_report {
-  display: block;
-  margin-left: auto;
-  width: 30%;
-}
-
 
 /* modal */
 
@@ -193,8 +195,18 @@ input, textarea, select, .uneditable-input {
   margin-left: auto;
 }
 
+
 /* plan_list */
 
 .inner {
   display: flex;
 }
+
+.daily_report {
+  display: block;
+  margin-top: 5px;
+  margin-left: auto;
+  width: 30%;
+}
+
+

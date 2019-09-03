@@ -107,12 +107,24 @@ class ArticlesController < ApplicationController
   # 配送計画作成
   def plan_create
     @user = User.find(params[:user_id])
+    i = 0
+    plan_create_params.each do |key, value|
+      if value[:plan_check] = true
+        i += 1
+      end
+    end
+    
+    if i <= 20
       plan_create_params.each do |key, value|
         article = Article.find(key)
         article.update_attributes(plan_check: value[:plan_check])
       end
       flash[:success] = "配送計画作成完了"
       redirect_to plan_list_user_articles_path(current_user.id, first_day: Date.today)
+    else
+      flash[:danger] = "配送先は20箇所までが最大です。"
+      redirect_to delivery_plan_user_articles_path(current_user.id)
+    end
   end
   
   # 配送計画リスト
