@@ -1,4 +1,8 @@
 class DailyReportsController < ApplicationController
+  # ログイン済みでなければ実行できない
+  before_action :logged_in_user, only: []
+  # 正しいユーザーでなければ実行できない
+  before_action :correct_user,   only: [:delivery_time, :report_create, :daily_index, :daily_show, :daily_update]
   
   # 納品開始・終了時間作成
   def delivery_time
@@ -24,9 +28,8 @@ class DailyReportsController < ApplicationController
       daily = article.DailyReports.find_by(day: Date.today)
       daily.update_attributes(report_name: @user.name)
     end
-    # 移動するかどうかの確認をする動作を追加する
     flash[:success] = "日報作成完了"
-    redirect_to daily_show_path(date: Date.today)
+    redirect_to daily_show_url(date: Date.today)
   end
   
   # 日報一覧表示
@@ -82,4 +85,24 @@ class DailyReportsController < ApplicationController
     def daily_params
       params.permit(daily_reports: [:delivery_start, :delivery_finish, :note, :absence])[:daily_reports]
     end
+    
+        # beforeアクション
+    
+    # ログイン済みユーザーか確認
+    def logged_in_user
+      unless logged_in?
+        # sessionsヘルパーメソッド
+        store_location
+        flash[:danger] = "ログインしてください。"
+        redirect_to login_url
+      end
+    end
+    
+    # 正しいユーザーかどうか確認
+    def correct_user
+      @user = User.find(params[:user_id])
+      # 後付けif文の構成と一緒で、条件式がfalseの場合のみ、冒頭のコードが実行される、current_user?はsessonヘルパーメソッド
+        redirect_to(root_url) unless current_user?(@user)
+    end
+    
 end

@@ -5,6 +5,7 @@
 </div>
 
 <%= form_tag plan_create_user_articles_path, method: :patch do %>
+  <%= submit_tag "リセット", class: "btn btn-secondary reset" %>
   <table class="table table-hover table-bordered">
     <thead class="thead-dark">
       <tr>
@@ -30,6 +31,8 @@
       <% end %>
     <% end %>
   </table>
+  <% if @articles.present? %>
     <%= submit_tag "作成", class: "btn btn-primary login" %>
+  <% end %>
 <% end %>
 

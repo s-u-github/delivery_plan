@@ -1,5 +1,11 @@
 class ArticlesController < ApplicationController
-  
+  # ログイン済みでなければ実行できない
+  before_action :logged_in_user, only: []
+  # 正しいユーザーでなければ実行できない
+  before_action :correct_user,   only: [:index, :create, :update, :destroy, :base_new, :base_create,
+                                        :base_edit, :base_update, :base_info, :delivery_plan, :plan_list]
+
+
   # 顧客一覧
   def index
     @user = User.find(params[:user_id])
@@ -107,6 +113,7 @@ class ArticlesController < ApplicationController
   # 配送計画作成
   def plan_create
     @user = User.find(params[:user_id])
+    @articles = @user.articles.where.not(base_point: true)
     i = 0
     plan_create_params.each do |key, value|
       if value[:plan_check] = true
@@ -114,29 +121,40 @@ class ArticlesController < ApplicationController
       end
     end
     
-    if i <= 20
-      plan_create_params.each do |key, value|
-        article = Article.find(key)
-        article.update_attributes(plan_check: value[:plan_check])
+    if params[:commit] == "作成"
+      if i <= 20
+        plan_create_params.each do |key, value|
+          article = Article.find(key)
+          article.update_attributes(plan_check: value[:plan_check])
+        end
+        flash[:success] = "配送計画作成完了"
+        redirect_to plan_list_user_articles_path(current_user.id, first_day: Date.today)
+      else
+        flash[:danger] = "配送先は20箇所までが最大です。"
+        redirect_to delivery_plan_user_articles_path(current_user.id)
       end
-      flash[:success] = "配送計画作成完了"
-      redirect_to plan_list_user_articles_path(current_user.id, first_day: Date.today)
-    else
-      flash[:danger] = "配送先は20箇所までが最大です。"
+    elsif params[:commit] == "リセット"
+      @articles.update_all(plan_check: false)
       redirect_to delivery_plan_user_articles_path(current_user.id)
     end
   end
   
   # 配送計画リスト
   def plan_list
-    if bese_point_present?
       @user = User.find(params[:user_id])
       @articles_all = @user.articles.all
       @articles = @user.articles.where(plan_check: true)
       @articles_count = @user.articles.where(plan_check: true).count
       @article_base = @user.articles.find_by(base_point: true)
-      @articles_delivery = @user.articles.where(plan_check: true).where.not(base_point: true)
-
+      @articles_delivery = @user.articles.where(plan_check: true, base_point: false)
+    
+    if @article_base == nil
+      flash[:danger] = "拠点情報がありません。はじめに拠点情報を登録してください。"
+      redirect_to base_new_user_articles_url(current_user.id)
+    elsif @articles_delivery.empty?
+      flash[:info] = "配送計画を作成して下さい。"
+      redirect_to delivery_plan_user_articles_url(current_user.id)
+    else
       # javascriptで使用
       gon.base = @article_base
       gon.count = @articles_count
@@ -167,9 +185,7 @@ class ArticlesController < ApplicationController
           end
         end
       end
-    else
-      flash[:danger] = "拠点情報がありません。はじめに拠点情報を登録してください。"
-      redirect_to base_new_user_articles_url(current_user.id)
+    
     end
   end
   
@@ -205,4 +221,22 @@ class ArticlesController < ApplicationController
       ::Article.count - current_article_count
     end
 
+    # beforeアクション
+    
+    # ログイン済みユーザーか確認
+    def logged_in_user
+      unless logged_in?
+        # sessionsヘルパーメソッド
+        store_location
+        flash[:danger] = "ログインしてください。"
+        redirect_to login_url
+      end
+    end
+    
+    # 正しいユーザーかどうか確認
+    def correct_user
+      @user = User.find(params[:user_id])
+      # 後付けif文の構成と一緒で、条件式がfalseの場合のみ、冒頭のコードが実行される、current_user?はsessonヘルパーメソッド
+        redirect_to(root_url) unless current_user?(@user)
+    end
 end
