@@ -29,7 +29,7 @@ class DailyReportsController < ApplicationController
       daily.update_attributes(report_name: @user.name)
     end
     flash[:success] = "日報作成完了"
-    redirect_to daily_show_url(date: Date.today)
+    redirect_to daily_show_url(user_id: params[:user_id], date: Date.today)
   end
   
   # 日報一覧表示

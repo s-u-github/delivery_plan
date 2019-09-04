@@ -7,6 +7,6 @@
 <%= month_calendar do |date| %>
   <%= date.strftime("%-m月%-d日") %>
   <% if DailyReport.where(day: date, report_name: @user.name).count > 0 %><br>
-    <%= link_to "日報", daily_show_path(date: date) %>
+    <%= link_to "日報", daily_show_path(user_id: params[:user_id], date: date) %>
   <% end %>
 <% end %>
