@@ -9,14 +9,14 @@
       <%= link_to "配送計画作成", delivery_plan_user_articles_path(current_user.id), class: "btn btn-primary top-button" %>
     </div>
     <div class="col-xs-6 col-sm-4 col-md-3">
-      <%= link_to "配送計画リスト", plan_list_user_articles_path(current_user.id, first_day: Date.today), class: "btn btn-info top-button" %>
+      <%= link_to "配送ルート", plan_list_user_articles_path(current_user.id, first_day: Date.today), class: "btn btn-info top-button" %>
     </div>
     <div class="col-xs-6 col-sm-4 col-md-3">
       <%= link_to "日報", daily_index_path(current_user.id, first_day: Date.today), class: "btn btn-danger top-button" %>
     </div>
   </div>
   <!-- 画像 -->
-  <div class="home-image">
+  <div class="home-image" meta name="viewport" content="width=device-width,initial-scale=1">
     <%= image_tag 'home.jpg', class: "show-img" %>
   </div>
 

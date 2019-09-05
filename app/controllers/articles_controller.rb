@@ -139,7 +139,7 @@ class ArticlesController < ApplicationController
     end
   end
   
-  # 配送計画リスト
+  # 配送ルート
   def plan_list
       @user = User.find(params[:user_id])
       @articles_all = @user.articles.all
