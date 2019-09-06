@@ -9,7 +9,7 @@ class ArticlesController < ApplicationController
   # 顧客一覧
   def index
     @user = User.find(params[:user_id])
-    @articles = @user.articles.where.not(base_point: true)
+    @articles = @user.articles.where.not(base_point: true).order('title')
     @article = @user.articles.new
   end
   
@@ -48,7 +48,7 @@ class ArticlesController < ApplicationController
     if @article.update_attributes(article_params)
       flash[:success] = "登録情報を更新しました。"
     else
-      flash[:danger] = "更新に失敗しました。。"
+      flash[:danger] = "更新に失敗しました。"
     end
       redirect_to user_articles_url
   end
