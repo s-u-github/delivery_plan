@@ -67,8 +67,7 @@ class DailyReportsController < ApplicationController
     if delivery_time_invalid?
       daily_params.each do |key, value|
         daily = DailyReport.find(key)
-        daily.update_attributes(delivery_start: value[:delivery_start], delivery_finish: value[:delivery_finish],
-                                absence: value[:absence],note: value[:note])
+        daily.update_attributes(delivery_start: value[:delivery_start], delivery_finish: value[:delivery_finish], note: value[:note])
       end
       flash[:success] = "日報を更新しました。"
       redirect_to daily_show_path(date: params[:date])

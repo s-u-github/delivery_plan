@@ -178,12 +178,19 @@
                   var leg = []; // 経由address
                   var distance = []; // 距離
                   var duration = []; // 予測時間
+                  var total_distance = 0; // 総合距離
+                  var total_duration = 0; // 総合時間
                   for(var i=0; i<response.routes[0].legs.length; i++){
                     leg.push(response.routes[0].legs[i].start_address); // addressをpush
                     distance.push(response.routes[0].legs[i].distance.text); // 距離をpush
                     duration.push(response.routes[0].legs[i].duration.text); // 予測時間をpush
+                    total_distance += response.routes[0].legs[i].distance.value;
+                    total_duration += response.routes[0].legs[i].duration.value;
                     // new google.maps.Marker({position:response.routes[0].legs[i].start_location, map:map});
                   }
+                  var h = (total_duration/36000|0)+(total_duration/3600%10|0)
+                  var m = (total_duration%3600/600|0)+(total_duration%3600/60%10|0)
+                  var total_durantion_text = h+"時間"+m+"分";
 
                   var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
                   for(var i=0; i<response.routes[0].legs.length; i++){
@@ -201,6 +208,8 @@
                     document.getElementById(`distance${i}`).innerHTML = distance[i];
                     document.getElementById(`duration${i}`).innerHTML = duration[i];
                   }
+                  document.getElementById('total_distance').innerHTML = total_distance / 1000 + "km";
+                  document.getElementById('total_duration').innerHTML = total_durantion_text;
                   
                   // $(function(){
                   //   $.ajax ({
@@ -209,7 +218,8 @@
                   //     dataType: 'html',
                   //     async: true,
                   //     data: {
-                  //       leg: leg
+                  //       distance: total_distance,
+                  //       duration: total_duration
                   //     },
                   //     success : function(response){
                   //       alert('成功');
@@ -300,7 +310,7 @@
             </select></label>
             
             <div class="daily_report">
-              <button data-toggle="modal" data-target="#daily-modal" class="btn btn-success daily_report">納品時間</button>
+              <button data-toggle="modal" data-target="#daily-modal" class="btn btn-success daily_report">発着時間</button>
                 <%= render 'daily_time' %>
                 <%= form_tag report_create_path, method: :patch do |f| %>
                   <%= submit_tag "日報作成", class: "btn btn-danger daily_report" %>
@@ -341,6 +351,16 @@
             <% i += 1 %>
             <% end %>
           </tbody>
+          
+          <tfoot>
+            <tr>
+              <td></td>
+              <th style="text-align: right;">総合距離:</th>
+              <td><div id="total_distance"></div></td>
+              <th>総合時間:</th>
+              <td style="text-align: right;"><div id="total_duration"></div></td>
+            </tr>
+          </tfoot>
         
         </table>
     

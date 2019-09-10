@@ -147,6 +147,9 @@ class ArticlesController < ApplicationController
       @articles_count = @user.articles.where(plan_check: true).count
       @article_base = @user.articles.find_by(base_point: true)
       @articles_delivery = @user.articles.where(plan_check: true, base_point: false)
+      @t_distance = params[:distance]
+      @t_duration = params[:duration]
+      
     
     if @article_base == nil
       flash[:danger] = "拠点情報がありません。はじめに拠点情報を登録してください。"
