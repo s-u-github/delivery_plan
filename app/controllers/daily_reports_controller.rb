@@ -12,10 +12,10 @@ class DailyReportsController < ApplicationController
     
     if @daily.delivery_start.nil?
       @daily.update_attributes(delivery_start: current_time)
-      flash[:info] = "納品開始"
+      flash[:info] = "出発時間記録"
     elsif @daily.delivery_start.present? && @daily.delivery_finish.nil?
       @daily.update_attributes(delivery_finish: current_time)
-      flash[:info] = "納品終了"
+      flash[:info] = "到着時間記録"
     end
     redirect_to plan_list_user_articles_url(user_id: current_user.id)
   end
@@ -26,7 +26,7 @@ class DailyReportsController < ApplicationController
     @articles_delivery = @user.articles.where(plan_check: true).where.not(base_point: true)
     @articles_delivery.each do |article|
       daily = article.DailyReports.find_by(day: Date.today)
-      daily.update_attributes(report_name: @user.name)
+      daily.update_attributes(report_name: @user.id)
     end
     flash[:success] = "日報作成完了"
     redirect_to daily_show_url(date: Date.today)
@@ -43,7 +43,7 @@ class DailyReportsController < ApplicationController
   def daily_show
     @user = User.find(params[:user_id])
     @daily_current= params[:date]
-    @dailys = DailyReport.where(day: @daily_current, report_name: @user.name).order('delivery_start')
+    @dailys = DailyReport.where(day: @daily_current, report_name: @user.id).order('delivery_start')
     @dailys_title = []
     @dailys_start = []
     @dailys_finish = []
