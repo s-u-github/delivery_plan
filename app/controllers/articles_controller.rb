@@ -128,14 +128,14 @@ class ArticlesController < ApplicationController
           article.update_attributes(plan_check: value[:plan_check])
         end
         flash[:success] = "配送計画作成完了"
-        redirect_to plan_list_user_articles_path(current_user.id, first_day: Date.today)
+        redirect_to plan_list_user_articles_url(current_user.id, first_day: Date.today)
       else
         flash[:danger] = "配送先は20箇所までが最大です。"
-        redirect_to delivery_plan_user_articles_path(current_user.id)
+        redirect_to delivery_plan_user_articles_url(current_user.id)
       end
     elsif params[:commit] == "リセット"
       @articles.update_all(plan_check: false)
-      redirect_to delivery_plan_user_articles_path(current_user.id)
+      redirect_to delivery_plan_user_articles_url(current_user.id)
     end
   end
   
@@ -147,17 +147,7 @@ class ArticlesController < ApplicationController
       @articles_count = @user.articles.where(plan_check: true).count
       @article_base = @user.articles.find_by(base_point: true)
       @articles_delivery = @user.articles.where(plan_check: true, base_point: false)
-      @t_distance = params[:distance]
-      @t_duration = params[:duration]
-      
-    
-    if @article_base == nil
-      flash[:danger] = "拠点情報がありません。はじめに拠点情報を登録してください。"
-      redirect_to base_new_user_articles_url(current_user.id)
-    elsif @articles_delivery.empty?
-      flash[:info] = "配送計画を作成して下さい。"
-      redirect_to delivery_plan_user_articles_url(current_user.id)
-    else
+
       # javascriptで使用
       gon.base = @article_base
       gon.count = @articles_count
@@ -178,6 +168,16 @@ class ArticlesController < ApplicationController
       gon.address = address
       gon.title = title
       
+    
+    if @article_base == nil
+      flash[:danger] = "拠点情報がありません。はじめに拠点情報を登録してください。"
+      redirect_to base_new_user_articles_url(current_user.id)
+    elsif @articles_delivery.empty?
+      flash[:info] = "配送計画を作成して下さい。"
+      redirect_to delivery_plan_user_articles_url(current_user.id)
+    else
+
+      
       @articles_all.each do |article|
         @first_day = first_day(params[:first_day])
         @last_day = @first_day.end_of_month # 初月の日付を使って月末をインスタンス変数に代
@@ -195,7 +195,7 @@ class ArticlesController < ApplicationController
   private
   
     def article_params
-      params.require(:article).permit(:title, :postcode, :latitude, :longitude, :address, :phone_num)
+      params.require(:article).permit(:title, :postcode, :address, :phone_num)
     end
     
     def plan_create_params

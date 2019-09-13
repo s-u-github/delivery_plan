@@ -32,7 +32,7 @@
         <td><%= article.phone_num %></td>
         <td>
           <div class="article-edit">
-            <a data-toggle="modal" data-target="#<%= article.title %>">
+            <a data-toggle="modal" data-target="#<%= article.title %>" style="cursor: pointer">
             編集
             </a>
             <%= render partial: 'edit_form', locals: {article: article} %><br>
