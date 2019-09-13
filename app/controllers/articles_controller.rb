@@ -146,25 +146,29 @@ class ArticlesController < ApplicationController
       @articles = @user.articles.where(plan_check: true)
       @articles_count = @user.articles.where(plan_check: true).count
       @article_base = @user.articles.find_by(base_point: true)
-      @articles_delivery = @user.articles.where(plan_check: true, base_point: false)
+      @articles_delivery = @user.articles.where(plan_check: true).where.not(base_point: true)
 
       # javascriptで使用
       gon.base = @article_base
       gon.count = @articles_count
       gon.articles = @articles
-      latitude = [@article_base.latitude]
-      longitude = [@article_base.longitude]
+      # latitude = [@article_base.latitude]
+      # longitude = [@article_base.longitude]
+      latlng = [];
       address = []
       title = []
       
       @articles_delivery.each do |article|
-        latitude.push(article.latitude)
-        longitude.push(article.longitude)
+        # latitude.push(article.latitude)
+        # longitude.push(article.longitude)
+        latlng.push(Geocoder.coordinates(article.address))
         address.push(article.address)
         title.push(article.title)
       end
-      gon.latitude = latitude
-      gon.longitude = longitude
+
+      # gon.latitude = latitude
+      # gon.longitude = longitude
+      gon.latlng = latlng
       gon.address = address
       gon.title = title
       

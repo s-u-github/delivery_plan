@@ -4,7 +4,7 @@
   <!--<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />-->
 
   <!-- Google Maps APIの読み込み -->
-  <script defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCVdA8BviehlgO1NcLlkMxtY4LOhRDC3pE&sensor=false" charset="utf-8"></script> 
+  <script defer src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=AIzaSyCVdA8BviehlgO1NcLlkMxtY4LOhRDC3pE" charset="utf-8"></script> 
   <!--<script async defer-->
   <!-- src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCVdA8BviehlgO1NcLlkMxtY4LOhRDC3pE&callback=initMap">-->
   <!--</script>-->
@@ -14,6 +14,7 @@
 
   var latitude = gon.latitude;
   var longitude = gon.longitude;
+  var latlng = gon.latlng
   var articles = gon.articles
   var address = gon.address
   var title = gon.title
@@ -22,15 +23,15 @@
   
         $(function(){
             /* waypts（最大8か所） */
-            var ary = [];
-            for (var i = 1; i < count; i++) {
-              ary.push(new google.maps.LatLng(latitude[i], longitude[i]))
+            // var ary = [];
+            // for (var i = 0; i < latlng.length; i++) {
+            //   ary.push(new google.maps.LatLng(latlng[i][0], latlng[i][1]))
               
-            }
+            // }
             var waypts=[];
-            for (var i=0; i<ary.length; i++) {
+            for (var i=0; i<address.length; i++) {
                 waypts.push({
-                    location:ary[i],
+                    location:address[i],
                     stopover:true
                 });
             }
@@ -40,8 +41,8 @@
             var map,mode;
             var oldDirections=[];
             var currentDirections=null;
-            var defaultStartSpot = new google.maps.LatLng(latitude[0], longitude[0]);
-            var defaultEndSpot = new google.maps.LatLng(latitude[0], longitude[0]);
+            var defaultStartSpot = new google.maps.LatLng(base.latitude, base.longitude);
+            var defaultEndSpot = defaultStartSpot;
             var curStartSpot,curEndSpot;
 
             initialize();
